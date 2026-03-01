@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encantamientos Minecraft Java 1.21.1</title>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --bg2: #0f1318;
+    --bg3: #141a22;
+    --gold: #f0c040;
+    --gold2: #c8920a;
+    --purple: #9b59b6;
+    --purple2: #6c3483;
+    --blue: #3498db;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --cyan: #1abc9c;
+    --text: #e8dcc8;
+    --text2: #a09070;
+    --border: rgba(240,192,64,0.25);
+    --card-bg: rgba(15,20,28,0.9);
+    --shadow: 0 8px 40px rgba(0,0,0,0.8);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Pixel grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Floating particles */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    opacity: 0;
+    animation: float-up linear infinite;
+    image-rendering: pixelated;
+  }
+  @keyframes float-up {
+    0% { transform: translateY(100vh) scale(1); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-50px) scale(0.5); opacity: 0; }
+  }
+
+  /* Header */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 2px solid var(--border);
+    background: linear-gradient(180deg, rgba(9,7,3,0.9) 0%, transparent 100%);
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: var(--purple2);
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border: 1px solid var(--gold2);
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    animation: pulse-border 2s ease-in-out infinite;
+  }
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 8px rgba(155,89,182,0.4); }
+    50% { box-shadow: 0 0 20px rgba(155,89,182,0.8), 0 0 40px rgba(240,192,64,0.2); }
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(240,192,64,0.5), 0 4px 20px rgba(0,0,0,0.9);
+    line-height: 1.1;
+    letter-spacing: 2px;
+    animation: title-glow 3s ease-in-out infinite;
+  }
+  @keyframes title-glow {
+    0%, 100% { text-shadow: 0 0 30px rgba(240,192,64,0.5), 0 4px 20px rgba(0,0,0,0.9); }
+    50% { text-shadow: 0 0 50px rgba(240,192,64,0.9), 0 0 80px rgba(155,89,182,0.4), 0 4px 20px rgba(0,0,0,0.9); }
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: var(--text2);
+    margin-top: 12px;
+    letter-spacing: 1px;
+    font-style: italic;
+  }
+
+  .version-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    background: rgba(27,188,156,0.1);
+    border: 1px solid rgba(27,188,156,0.3);
+    color: var(--cyan);
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+  }
+  .version-tag::before { content: '⚗'; font-size: 1rem; }
+
+  /* Navigation tabs */
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0 20px;
+    background: rgba(10,12,15,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    position: relative;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+  }
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+  .tab-btn .tab-icon { margin-right: 8px; font-size: 1rem; }
+
+  /* Main content */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold2), transparent);
+  }
+  .section-desc {
+    color: var(--text2);
+    margin-bottom: 36px;
+    font-style: italic;
+  }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: card-in 0.5s ease backwards;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow), 0 0 30px rgba(240,192,64,0.1);
+    border-color: rgba(240,192,64,0.5);
+  }
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.2s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.3s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+  .card:nth-child(8) { animation-delay: 0.4s; }
+  .card:nth-child(9) { animation-delay: 0.45s; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(240,192,64,0.04);
+  }
+  .card-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 8px rgba(240,192,64,0.4));
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .card-subtitle {
+    font-size: 0.78rem;
+    color: var(--text2);
+    letter-spacing: 1px;
+    font-style: italic;
+  }
+
+  /* Accent bar per type */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .card.type-weapon::before { background: linear-gradient(90deg, var(--red), var(--purple)); }
+  .card.type-tool::before { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+  .card.type-armor::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+  .card.type-ranged::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+  .card.type-special::before { background: linear-gradient(90deg, var(--gold), var(--red)); }
+  .card.type-new::before { background: linear-gradient(90deg, var(--cyan), var(--green)); }
+
+  .card-body { padding: 18px 22px 22px; }
+
+  /* Enchantment list */
+  .ench-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .ench-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    transition: background 0.2s;
+  }
+  .ench-item:hover { background: rgba(240,192,64,0.05); border-color: rgba(240,192,64,0.2); }
+
+  .ench-level {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .lvl-gold { background: rgba(240,192,64,0.2); color: var(--gold); border: 1px solid rgba(240,192,64,0.4); }
+  .lvl-blue { background: rgba(52,152,219,0.2); color: var(--blue); border: 1px solid rgba(52,152,219,0.4); }
+  .lvl-purple { background: rgba(155,89,182,0.2); color: #c39bd3; border: 1px solid rgba(155,89,182,0.4); }
+  .lvl-green { background: rgba(39,174,96,0.2); color: #82e0aa; border: 1px solid rgba(39,174,96,0.4); }
+  .lvl-cyan { background: rgba(26,188,156,0.2); color: var(--cyan); border: 1px solid rgba(26,188,156,0.4); }
+  .lvl-red { background: rgba(231,76,60,0.2); color: #f1948a; border: 1px solid rgba(231,76,60,0.4); }
+
+  .ench-info { flex: 1; min-width: 0; }
+  .ench-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .ench-desc {
+    font-size: 0.8rem;
+    color: var(--text2);
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  /* Priority badge */
+  .priority {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    flex-shrink: 0;
+    font-family: 'Cinzel', serif;
+  }
+  .priority-essential { background: rgba(231,76,60,0.2); color: #f1948a; border: 1px solid rgba(231,76,60,0.4); }
+  .priority-recomendado { background: rgba(240,192,64,0.2); color: var(--gold); border: 1px solid rgba(240,192,64,0.4); }
+  .priority-opcional { background: rgba(100,100,100,0.2); color: #888; border: 1px solid rgba(100,100,100,0.4); }
+  .priority-exclusivo { background: rgba(155,89,182,0.2); color: #c39bd3; border: 1px solid rgba(155,89,182,0.4); }
+
+  /* Notes box */
+  .card-note {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: rgba(27,188,156,0.07);
+    border-left: 3px solid var(--cyan);
+    font-size: 0.82rem;
+    color: var(--text2);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .card-note strong { color: var(--cyan); font-style: normal; }
+
+  /* Mutual exclusion note */
+  .excl-note {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: rgba(231,76,60,0.07);
+    border-left: 3px solid #e74c3c;
+    font-size: 0.82rem;
+    color: #f1948a;
+    line-height: 1.5;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 24px;
+    background: rgba(15,20,28,0.7);
+    border: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+  .legend-title {
+    width: 100%;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--text2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text2);
+  }
+
+  /* New badge */
+  .new-badge {
+    display: inline-block;
+    background: var(--cyan);
+    color: #000;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    letter-spacing: 1px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold2); }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 0.82rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<header>
+  <div class="header-badge">Guía Completa de Encantamientos</div>
+  <h1>⚗ GRIMORIO<br>DE ENCANTAMIENTOS</h1>
+  <p class="subtitle">La guía definitiva para maximizar tu supervivencia</p>
+  <div class="version-tag">Minecraft Java Edition · Versión 1.21.1 · Modo Supervivencia</div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('armas')"><span class="tab-icon">⚔️</span>Armas</button>
+  <button class="tab-btn" onclick="showTab('herramientas')"><span class="tab-icon">⛏️</span>Herramientas</button>
+  <button class="tab-btn" onclick="showTab('armadura')"><span class="tab-icon">🛡️</span>Armadura</button>
+  <button class="tab-btn" onclick="showTab('especiales')"><span class="tab-icon">✨</span>Especiales</button>
+</nav>
+
+<main>
+
+  <!-- ===================== ARMAS ===================== -->
+  <div class="section active" id="armas">
+
+    <div class="legend">
+      <div class="legend-title">Leyenda de Prioridades</div>
+      <div class="legend-item"><span class="priority priority-essential">Esencial</span> Imprescindible, ponlo siempre primero</div>
+      <div class="legend-item"><span class="priority priority-recomendado">Recomendado</span> Mejora significativamente el objeto</div>
+      <div class="legend-item"><span class="priority priority-opcional">Opcional</span> Útil en situaciones específicas</div>
+      <div class="legend-item"><span class="priority priority-exclusivo">Exclusivo</span> Incompatible con otras opciones</div>
+    </div>
+
+    <h2 class="section-title">⚔️ Armas de Combate</h2>
+    <p class="section-desc">Los mejores encantamientos para eliminar mobs y sobrevivir en el mundo hostil de Minecraft.</p>
+
+    <div class="cards-grid">
+
+      <!-- Espada -->
+      <div class="card type-weapon">
+        <div class="card-header">
+          <span class="card-icon">🗡️</span>
+          <div>
+            <div class="card-title">Espada</div>
+            <div class="card-subtitle">Sword · Arma principal de combate cuerpo a cuerpo</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-red">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Filo (Sharpness)</div>
+                <div class="ench-desc">+1.5 de daño por nivel. El encantamiento ofensivo más poderoso contra todo tipo de enemigos.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Saqueo (Looting)</div>
+                <div class="ench-desc">Aumenta la cantidad y calidad de los objetos que sueltan los mobs al morir.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Reduce la probabilidad de que el objeto se dañe con cada uso.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Usa la experiencia recolectada para reparar automáticamente el objeto.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-purple">II</span>
+              <div class="ench-info">
+                <div class="ench-name">Empuje (Knockback)</div>
+                <div class="ench-desc">Aleja a los enemigos al golpearlos, dándote espacio para maniobrar.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-red">II</span>
+              <div class="ench-info">
+                <div class="ench-name">Ignición (Fire Aspect)</div>
+                <div class="ench-desc">Prende fuego a los enemigos. Los animales sueltan carne cocinada al morir.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Perdición de Artrópodos (Bane of Arthropods)</div>
+                <div class="ench-desc">+2.5 daño extra a arañas, cucarachas, abejas y endermites. Exclusivo con Filo.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Destructor de No Muertos (Smite)</div>
+                <div class="ench-desc">+2.5 daño extra a zombis, esqueletos y no muertos. Exclusivo con Filo.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+          </ul>
+          <div class="excl-note">⚠ <strong>Filo, Destructor de No Muertos y Perdición de Artrópodos son mutuamente excluyentes.</strong> En supervivencia general, usa siempre Filo V.</div>
+        </div>
+      </div>
+
+      <!-- Hacha de combate -->
+      <div class="card type-weapon">
+        <div class="card-header">
+          <span class="card-icon">🪓</span>
+          <div>
+            <div class="card-title">Hacha (Combat)</div>
+            <div class="card-subtitle">Axe · Alternativa de alto daño con mayor cooldown</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-red">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Filo (Sharpness)</div>
+                <div class="ench-desc">Las hachas hacen más daño base que la espada. Con Filo V son devastadoras.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Eficiencia (Efficiency)</div>
+                <div class="ench-desc">También funciona como herramienta de tala. Velocidad de corte mejorada.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Esencial para prolongar la vida útil del hacha en combate y tala.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación con experiencia, fundamental para cualquier objeto de uso continuo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Fortuna (Fortune)</div>
+                <div class="ench-desc">Al talar, puede multiplicar los objetos obtenidos de ciertas plantas y manzanas.</div>
+              </div>
+              <span class="priority priority-opcional">Opcional</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Nota:</strong> El hacha deshabilita escudos por 5 segundos con carga completa, lo que la hace especialmente útil contra jugadores en modo multijugador PvP.</div>
+        </div>
+      </div>
+
+      <!-- Maza (nueva 1.21) -->
+      <div class="card type-new">
+        <div class="card-header">
+          <span class="card-icon">🪨</span>
+          <div>
+            <div class="card-title">Maza <span class="new-badge">NUEVA 1.21</span></div>
+            <div class="card-subtitle">Mace · Arma de la Prueba de Armas, daño por caída</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Densidad (Density)</div>
+                <div class="ench-desc">Aumenta el daño base de la maza y amplifica el daño por caída exponencialmente.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-purple">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Perforación (Breach)</div>
+                <div class="ench-desc">Ignora hasta el 75% de la armadura del objetivo. Perfecto para enemigos bien equipados.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Golpe de Viento (Wind Burst)</div>
+                <div class="ench-desc">Al impactar, lanza al jugador hacia arriba, permitiendo combo de caídas repetidas.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Reduce el desgaste en combate activo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación continua con experiencia.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Estrategia:</strong> Sube alto, activa vuelo con élitros o salta, y cae sobre el enemigo para daño masivo. Con Golpe de Viento puedes encadenar golpes repetidamente sin tocar el suelo.</div>
+        </div>
+      </div>
+
+      <!-- Tridente -->
+      <div class="card type-special">
+        <div class="card-header">
+          <span class="card-icon">🔱</span>
+          <div>
+            <div class="card-title">Tridente</div>
+            <div class="card-subtitle">Trident · Versátil: cuerpo a cuerpo, lanzamiento y vuelo</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Lealtad (Loyalty)</div>
+                <div class="ench-desc">El tridente regresa a tu mano después de ser lanzado. Indispensable para no perderlo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-red">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Ímpetu (Impaling)</div>
+                <div class="ench-desc">+2.5 daño extra por nivel a mobs acuáticos (y a todos con lluvia/agua en 1.21).</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Fundamental para un objeto tan difícil de conseguir.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Los tridentes no se pueden craftear, reparar con Mending es crítico.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Canalización (Channeling)</div>
+                <div class="ench-desc">Invoca un rayo al impactar durante tormenta. Convierte creepers en cargados.</div>
+              </div>
+              <span class="priority priority-opcional">Opcional</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-purple">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Aguamagia (Riptide)</div>
+                <div class="ench-desc">Propulsa al jugador al lanzar el tridente bajo lluvia o agua. Exclusivo con Lealtad.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+          </ul>
+          <div class="excl-note">⚠ <strong>Lealtad y Aguamagia son mutuamente excluyentes.</strong> Elige: tridente de combate (Lealtad) o tridente de movimiento (Aguamagia).</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== HERRAMIENTAS ===================== -->
+  <div class="section" id="herramientas">
+
+    <h2 class="section-title">⛏️ Herramientas</h2>
+    <p class="section-desc">Maximiza la eficiencia en minería, construcción y recolección de recursos.</p>
+
+    <div class="cards-grid">
+
+      <!-- Pico -->
+      <div class="card type-tool">
+        <div class="card-header">
+          <span class="card-icon">⛏️</span>
+          <div>
+            <div class="card-title">Pico (Pickaxe)</div>
+            <div class="card-subtitle">La herramienta más importante del juego</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Eficiencia (Efficiency)</div>
+                <div class="ench-desc">Aumenta drásticamente la velocidad de minería. A nivel V, minar netherita es rápido.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Fortuna (Fortune)</div>
+                <div class="ench-desc">Multiplica los recursos obtenidos: hasta 4x diamantes, 4x carbón, etc. El mejor para minería.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Con tanto uso, irrompibilidad triplica aproximadamente la durabilidad.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Imprescindible. Usa la XP de minería para repararse automáticamente.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Toque de Seda (Silk Touch)</div>
+                <div class="ench-desc">Obtén el bloque exacto: vidrio, pasto, colmenas, piedra, cristal. Exclusivo con Fortuna.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Consejo:</strong> Ten <em>dos picos</em>: uno con Fortuna III para minar minerales y otro con Toque de Seda para bloques especiales. Ambos con Eficiencia V, Irrompibilidad III y Reparación.</div>
+          <div class="excl-note">⚠ Fortuna y Toque de Seda son incompatibles entre sí.</div>
+        </div>
+      </div>
+
+      <!-- Pala -->
+      <div class="card type-tool">
+        <div class="card-header">
+          <span class="card-icon">🪣</span>
+          <div>
+            <div class="card-title">Pala (Shovel)</div>
+            <div class="card-subtitle">Excavación de tierra, arena y grava rápida</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Eficiencia (Efficiency)</div>
+                <div class="ench-desc">Permite excavar bloques de tierra, arena y grava a velocidad extrema.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Prolonga la vida útil de una herramienta de uso frecuente.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación esencial para herramientas de uso diario.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Fortuna (Fortune)</div>
+                <div class="ench-desc">Más semillas de cultivos y materiales de la tierra. También más carne de gravel.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Toque de Seda (Silk Touch)</div>
+                <div class="ench-desc">Para recoger césped, pasto de micelio y otros bloques especiales intactos.</div>
+              </div>
+              <span class="priority priority-opcional">Opcional</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Hacha de madera -->
+      <div class="card type-tool">
+        <div class="card-header">
+          <span class="card-icon">🌲</span>
+          <div>
+            <div class="card-title">Hacha (Woodcutting)</div>
+            <div class="card-subtitle">Axe · Tala de madera y materiales de madera</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Eficiencia (Efficiency)</div>
+                <div class="ench-desc">Corta troncos casi instantáneamente con nivel máximo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Esencial para una herramienta que se usa continuamente.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación con experiencia, vital para herramientas de uso intensivo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Fortuna (Fortune)</div>
+                <div class="ench-desc">Más manzanas, palos y otros materiales secundarios al talar.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Toque de Seda (Silk Touch)</div>
+                <div class="ench-desc">Para recoger colmenas de abejas sin destruirlas ni molestar a las abejas.</div>
+              </div>
+              <span class="priority priority-opcional">Opcional</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Azada -->
+      <div class="card type-tool">
+        <div class="card-header">
+          <span class="card-icon">🌾</span>
+          <div>
+            <div class="card-title">Azada (Hoe)</div>
+            <div class="card-subtitle">Agricultura y bloques de plantas en 1.21</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Eficiencia (Efficiency)</div>
+                <div class="ench-desc">La azada de netherita con Eficiencia V destruye bloques naturales (hojas, plantas) al instante.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Fortuna (Fortune)</div>
+                <div class="ench-desc">Duplica o triplica las semillas y cultivos al recolectar. Enormemente útil en granjas.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Prolonga la herramienta en granjas de alta producción.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación continua, especialmente útil en granjas grandes.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Toque de Seda (Silk Touch)</div>
+                <div class="ench-desc">Para recoger hojas de árbol completas o micelio sin romperlas.</div>
+              </div>
+              <span class="priority priority-opcional">Opcional</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Tip 1.21:</strong> La azada de netherita con Eficiencia V destruye hojas y plantas de forma instantánea sin requerir tabla de encantamientos especial. ¡Es una de las herramientas más subestimadas!</div>
+        </div>
+      </div>
+
+      <!-- Tijeras -->
+      <div class="card type-tool">
+        <div class="card-header">
+          <span class="card-icon">✂️</span>
+          <div>
+            <div class="card-title">Tijeras (Shears)</div>
+            <div class="card-subtitle">Para lana, hojas y plantas sin dañarlas</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Eficiencia (Efficiency)</div>
+                <div class="ench-desc">Permite esquilar ovejas y cortar hojas mucho más rápido.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Las tijeras se rompen rápido sin este encantamiento.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación, muy útil en granjas de lana automatizadas.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Nota:</strong> Las tijeras no admiten Fortuna ni Toque de Seda. Son herramientas especializadas para lana, hojas, enredaderas y plantas.</div>
+        </div>
+      </div>
+
+      <!-- Caña de pescar -->
+      <div class="card type-tool">
+        <div class="card-header">
+          <span class="card-icon">🎣</span>
+          <div>
+            <div class="card-title">Caña de Pescar (Fishing Rod)</div>
+            <div class="card-subtitle">Pesca y obtención de objetos raros</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-green">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Suerte del Mar (Luck of the Sea)</div>
+                <div class="ench-desc">Aumenta la probabilidad de obtener objetos raros: encantamientos, arcos, libros y más.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Señuelo (Lure)</div>
+                <div class="ench-desc">Reduce el tiempo de espera entre cada mordida. A nivel III, los peces muerden cada 5 segundos.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">La caña se daña con cada uso, irrompibilidad la hace duradera.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Paradoja útil: pescar te da XP que repara la caña automáticamente.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Estrategia de inicio:</strong> La pesca con Suerte del Mar III y Señuelo III es la mejor forma de obtener libros encantados raros al principio del juego, incluyendo el propio <em>Reparación</em>.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== ARMADURA ===================== -->
+  <div class="section" id="armadura">
+
+    <h2 class="section-title">🛡️ Armadura Completa</h2>
+    <p class="section-desc">La configuración óptima de armadura para resistir cualquier amenaza en Minecraft Java 1.21.1.</p>
+
+    <div class="cards-grid">
+
+      <!-- Casco -->
+      <div class="card type-armor">
+        <div class="card-header">
+          <span class="card-icon">⛑️</span>
+          <div>
+            <div class="card-title">Casco (Helmet)</div>
+            <div class="card-subtitle">Protección de cabeza y utilidad acuática</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">IV</span>
+              <div class="ench-info">
+                <div class="ench-name">Protección (Protection)</div>
+                <div class="ench-desc">Reducción de daño general del 4% por nivel. Es el mejor encantamiento defensivo universal.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Respiración (Respiration)</div>
+                <div class="ench-desc">Extiende el tiempo que puedes estar bajo el agua en 15s por nivel. A III, 60s bajo agua.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Afinidad Acuática (Aqua Affinity)</div>
+                <div class="ench-desc">Permite minar bajo el agua a velocidad normal. Solo necesita nivel I para el efecto completo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Triplica la durabilidad efectiva de la armadura.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación. Con Mending en toda la armadura no gastarás hierro en reparaciones.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Alternativa:</strong> Si no tienes Protección IV, usa Protección contra Proyectiles IV en el casco específicamente si sueles enfrentarte a esqueletos o creepers.</div>
+        </div>
+      </div>
+
+      <!-- Peto -->
+      <div class="card type-armor">
+        <div class="card-header">
+          <span class="card-icon">🦺</span>
+          <div>
+            <div class="card-title">Peto (Chestplate)</div>
+            <div class="card-subtitle">La pieza de mayor protección de la armadura</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">IV</span>
+              <div class="ench-info">
+                <div class="ench-name">Protección (Protection)</div>
+                <div class="ench-desc">Máxima reducción de daño general. El peto es la pieza más importante de la armadura.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">El peto absorbe más daño y se desgasta más rápido que otras piezas.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Imprescindible para mantener la pieza de armadura más crítica en perfecto estado.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-red">IV</span>
+              <div class="ench-info">
+                <div class="ench-name">Prot. contra Explosiones (Blast Protection)</div>
+                <div class="ench-desc">Reduce el daño de explosiones (creepers, TNT) en 8% por nivel. Exclusivo con Protección.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+          </ul>
+          <div class="excl-note">⚠ Protección, Prot. Explosiones, Prot. Proyectiles y Prot. Fuego son mutuamente excluyentes entre sí. En supervivencia general, Protección IV es la mejor opción.</div>
+        </div>
+      </div>
+
+      <!-- Polainas -->
+      <div class="card type-armor">
+        <div class="card-header">
+          <span class="card-icon">🩱</span>
+          <div>
+            <div class="card-title">Polainas (Leggings)</div>
+            <div class="card-subtitle">Protección y velocidad en combate</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">IV</span>
+              <div class="ench-info">
+                <div class="ench-name">Protección (Protection)</div>
+                <div class="ench-desc">Reducción de daño estándar. Las polainas son la segunda pieza con más puntos de armadura.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-purple">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Velocidad Explosiva (Swift Sneak)</div>
+                <div class="ench-desc">Permite moverte más rápido mientras te agachas. Muy útil en construcción y sigilo.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Reduce el desgaste en combate activo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación continua para armadura de uso diario.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Nota:</strong> Velocidad Explosiva III sólo se obtiene en el Almacén Antiguo (Ancient City). Vale la pena explorarlo específicamente para conseguirlo.</div>
+        </div>
+      </div>
+
+      <!-- Botas -->
+      <div class="card type-armor">
+        <div class="card-header">
+          <span class="card-icon">👢</span>
+          <div>
+            <div class="card-title">Botas (Boots)</div>
+            <div class="card-subtitle">Movilidad y resistencia ambiental</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">IV</span>
+              <div class="ench-info">
+                <div class="ench-name">Protección (Protection)</div>
+                <div class="ench-desc">Reducción de daño general, fundamental en cualquier build defensivo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-green">IV</span>
+              <div class="ench-info">
+                <div class="ench-name">Caída de Pluma (Feather Falling)</div>
+                <div class="ench-desc">Reduce hasta el 48% del daño por caída. Probablemente salva tu vida más veces que cualquier otro encantamiento.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Profundidades del Mar (Depth Strider)</div>
+                <div class="ench-desc">Muévete a velocidad casi normal bajo el agua. A nivel III, sin penalización acuática.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Velocidad de Almas (Soul Speed)</div>
+                <div class="ench-desc">Corres más rápido en arena de almas y suelo de almas del Nether. Exclusivo con Profundidades del Mar.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Las botas se desgastan con el movimiento constante.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación esencial para no quedar sin botas en momentos críticos.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="excl-note">⚠ Profundidades del Mar y Velocidad de Almas son incompatibles. Elige según tu entorno principal de juego.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== ESPECIALES ===================== -->
+  <div class="section" id="especiales">
+
+    <h2 class="section-title">✨ Armas a Distancia</h2>
+    <p class="section-desc">Encantamientos para arco, ballesta y combate a distancia.</p>
+
+    <div class="cards-grid">
+
+      <!-- Arco -->
+      <div class="card type-ranged">
+        <div class="card-header">
+          <span class="card-icon">🏹</span>
+          <div>
+            <div class="card-title">Arco (Bow)</div>
+            <div class="card-subtitle">El arma a distancia más versátil del juego</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-red">V</span>
+              <div class="ench-info">
+                <div class="ench-name">Poder (Power)</div>
+                <div class="ench-desc">+25% de daño por flecha por nivel. A nivel V, una flecha cargada puede matar de un golpe.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Infinito (Infinity)</div>
+                <div class="ench-desc">Dispara flechas sin gastarlas (necesitas al menos 1 flecha en el inventario). Exclusivo con Munición.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-red">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Llamas (Flame)</div>
+                <div class="ench-desc">Las flechas prenden fuego a los enemigos. Activa dispensadores, fogatas y TNT.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-purple">II</span>
+              <div class="ench-info">
+                <div class="ench-name">Retroceso (Punch)</div>
+                <div class="ench-desc">Aleja a los enemigos con cada impacto. Útil para mantener la distancia segura.</div>
+              </div>
+              <span class="priority priority-recomendado">Recomendado</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Prolonga la vida del arco en encuentros de largo aliento.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Munición (Mending)</div>
+                <div class="ench-desc">Si no usas Infinito, Mending te permite reparar el arco. Son incompatibles entre sí.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+          </ul>
+          <div class="excl-note">⚠ Infinito y Mending (Reparación) son incompatibles. El arco con Infinito necesita mantenimiento manual. Muchos prefieren Mending para el end-game.</div>
+        </div>
+      </div>
+
+      <!-- Ballesta -->
+      <div class="card type-ranged">
+        <div class="card-header">
+          <span class="card-icon">🎯</span>
+          <div>
+            <div class="card-title">Ballesta (Crossbow)</div>
+            <div class="card-subtitle">Más potencia por disparo, ideal para múltiples objetivos</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-red">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Perforación (Piercing)</div>
+                <div class="ench-desc">Las flechas atraviesan hasta 4 enemigos. Extraordinario contra grupos de mobs.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-blue">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Celeridad (Quick Charge)</div>
+                <div class="ench-desc">Reduce el tiempo de recarga a 0.25s por nivel. A III, la recarga es casi instantánea.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">La ballesta se desgasta con el uso intensivo en combate.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación con experiencia para mantener la ballesta operativa.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-purple">I</span>
+              <div class="ench-info">
+                <div class="ench-name">Multidisparo (Multishot)</div>
+                <div class="ench-desc">Dispara 3 flechas a la vez en un ángulo de 10°. Exclusivo con Perforación.</div>
+              </div>
+              <span class="priority priority-exclusivo">Exclusivo</span>
+            </li>
+          </ul>
+          <div class="excl-note">⚠ Perforación y Multidisparo son incompatibles. Perforación es mejor para mobs en fila. Multidisparo es mejor contra grupos dispersos.</div>
+        </div>
+      </div>
+
+      <!-- Escudo -->
+      <div class="card type-armor">
+        <div class="card-header">
+          <span class="card-icon">🛡️</span>
+          <div>
+            <div class="card-title">Escudo (Shield)</div>
+            <div class="card-subtitle">Defensa activa contra proyectiles y ataques</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">El escudo absorbe mucho daño. Sin irrompibilidad se rompe con sorprendente rapidez.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Autoreparación vital para el escudo, que puede degradarse muy rápido en combate activo.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Nota:</strong> En 1.21.1 el escudo sólo admite Irrompibilidad y Reparación como encantamientos. Sigue siendo fundamental para bloquear proyectiles, explosiones y ataques cuerpo a cuerpo.</div>
+        </div>
+      </div>
+
+      <!-- Élitros -->
+      <div class="card type-special">
+        <div class="card-header">
+          <span class="card-icon">🦋</span>
+          <div>
+            <div class="card-title">Élitros (Elytra)</div>
+            <div class="card-subtitle">El objeto de vuelo del End, imprescindible en end-game</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="ench-list">
+            <li class="ench-item">
+              <span class="ench-level lvl-gold">III</span>
+              <div class="ench-info">
+                <div class="ench-name">Irrompibilidad (Unbreaking)</div>
+                <div class="ench-desc">Los élitros se degradan con cada segundo de vuelo. Irrompibilidad III los hace 3-4 veces más duraderos.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+            <li class="ench-item">
+              <span class="ench-level lvl-cyan">∞</span>
+              <div class="ench-info">
+                <div class="ench-name">Reparación (Mending)</div>
+                <div class="ench-desc">Esencial: repara los élitros con XP recolectada durante el vuelo o al matar mobs.</div>
+              </div>
+              <span class="priority priority-essential">Esencial</span>
+            </li>
+          </ul>
+          <div class="card-note"><strong>Estrategia end-game:</strong> Combina élitros con cohetes de fuegos artificiales (2-3 estrellas de pólvora) para vuelo propulsado. Con Irrompibilidad III y Reparación, los élitros duran indefinidamente si recolectas suficiente experiencia.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Guía para Minecraft Java Edition 1.21.1 · Modo Supervivencia Normal · Sin mods ni trucos
+</footer>
+
+<script>
+  // Particle system
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 15) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    const colors = ['#f0c040', '#9b59b6', '#3498db', '#1abc9c', '#e74c3c'];
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    container.appendChild(p);
+  }
+
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Re-trigger card animations
+    const cards = document.querySelectorAll(`#${id} .card`);
+    cards.forEach((card, i) => {
+      card.style.animation = 'none';
+      card.offsetHeight; // reflow
+      card.style.animation = `card-in 0.5s ease ${i * 0.07}s backwards`;
+    });
+  }
+</script>
+</body>
+</html>

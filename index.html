@@ -441,24 +441,148 @@
     .cards-grid { grid-template-columns: 1fr; }
     h1 { font-size: 1.8rem; }
   }
+
+  /* Light theme */
+  body.light {
+    --bg: #f5f0e8;
+    --bg2: #ede5d5;
+    --bg3: #e0d5c0;
+    --gold: #a06800;
+    --gold2: #c8920a;
+    --purple: #7b3fa0;
+    --purple2: #9b59b6;
+    --blue: #1a6fa8;
+    --green: #1a7a40;
+    --red: #c0392b;
+    --cyan: #0e8a70;
+    --text: #2c2010;
+    --text2: #6b5030;
+    --border: rgba(160,104,0,0.3);
+    --card-bg: rgba(255,250,240,0.95);
+    --shadow: 0 8px 40px rgba(0,0,0,0.15);
+  }
+  body.light::before {
+    background-image:
+      linear-gradient(rgba(160,104,0,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(160,104,0,0.06) 1px, transparent 1px);
+  }
+  body.light header {
+    background: linear-gradient(180deg, rgba(240,230,210,0.95) 0%, transparent 100%);
+  }
+  body.light .nav-tabs {
+    background: rgba(240,232,215,0.97);
+  }
+  body.light .card-header {
+    background: rgba(160,104,0,0.06);
+  }
+  body.light .ench-item {
+    background: rgba(0,0,0,0.03);
+    border-color: rgba(0,0,0,0.08);
+  }
+  body.light .ench-item:hover {
+    background: rgba(160,104,0,0.07);
+    border-color: rgba(160,104,0,0.25);
+  }
+  body.light .legend {
+    background: rgba(230,220,200,0.8);
+  }
+  body.light .card-note {
+    background: rgba(14,138,112,0.08);
+  }
+  body.light .excl-note {
+    background: rgba(192,57,43,0.07);
+  }
+  body.light footer {
+    background: rgba(230,220,200,0.5);
+  }
+
+  /* Theme toggle button */
+  .theme-btn {
+    position: fixed;
+    top: 16px;
+    left: 20px;
+    z-index: 999;
+    background: rgba(10,12,15,0.95);
+    border: 1px solid var(--gold2);
+    color: var(--text2);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  .theme-btn:hover { background: rgba(240,192,64,0.1); color: var(--gold); }
+  .theme-icon { font-size: 1.1rem; transition: transform 0.4s; }
+  body.light .theme-btn {
+    background: rgba(240,232,215,0.97);
+  }
+  body.light .theme-btn:hover {
+    background: rgba(160,104,0,0.1);
+  }
+  .lang-switcher {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    border: 1px solid var(--gold2);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  .lang-btn {
+    background: rgba(10,12,15,0.95);
+    border: none;
+    color: var(--text2);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lang-btn + .lang-btn { border-left: 1px solid var(--gold2); }
+  .lang-btn:hover { background: rgba(240,192,64,0.1); color: var(--gold); }
+  .lang-btn.active { background: rgba(240,192,64,0.2); color: var(--gold); }
+  .lang-btn .flag { font-size: 1.1rem; }
 </style>
 </head>
 <body>
 
+
+<button class="theme-btn" id="theme-toggle" onclick="toggleTheme()">
+  <span class="theme-icon" id="theme-icon">☀️</span>
+  <span id="theme-label">CLAR</span>
+</button>
+
+<div class="lang-switcher">
+  <button class="lang-btn active" id="btn-ca" onclick="setLang('ca')"><span class="flag">🟡</span>CAT</button>
+  <button class="lang-btn" id="btn-es" onclick="setLang('es')"><span class="flag">🔴</span>ESP</button>
+</div>
+
 <div class="particles" id="particles"></div>
 
 <header>
-  <div class="header-badge">Guia Completa d'Encanteris</div>
-  <h1>⚗ GRIMORI<br>D'ENCANTERIS</h1>
-  <p class="subtitle">La guia definitiva per maximitzar la teva supervivència</p>
-  <div class="version-tag">Minecraft Java Edition · Versió 1.21.1 · Mode Supervivència</div>
+  <div class="header-badge"><span data-i18n="i18n_122">Guia Completa d'Encanteris</span></div>
+  <h1>⚗ <span data-i18n="i18n_174">GRIMORI</span><br><span data-i18n="i18n_165">D'ENCANTERIS</span></h1>
+  <p class="subtitle"><span data-i18n="i18n_75">La guia definitiva per maximitzar la teva supervivència</span></p>
+  <div class="version-tag"><span data-i18n="i18n_70">Minecraft Java Edition · Versió 1.21.1 · Mode Supervivència</span></div>
 </header>
 
 <nav class="nav-tabs">
-  <button class="tab-btn active" onclick="showTab('armes')"><span class="tab-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest/scale-to-width/360?cb=20200304213920" alt="⚔️" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span>Armes</button>
-  <button class="tab-btn" onclick="showTab('eines')"><span class="tab-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Netherite_Pickaxe_JE3.png/revision/latest/scale-to-width/360?cb=20210418192807" alt="⛏️" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span>Eines</button>
+  <button class="tab-btn active" onclick="showTab('armes')"><span class="tab-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest/scale-to-width/360?cb=20200304213920" alt="⚔️" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span<span data-i18n="i18n_175">>Armes<</span>/button>
+  <button class="tab-btn" onclick="showTab('eines')"><span class="tab-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Netherite_Pickaxe_JE3.png/revision/latest/scale-to-width/360?cb=20210418192807" alt="⛏️" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span<span data-i18n="i18n_176">>Eines<</span>/button>
   <button class="tab-btn" onclick="showTab('armadura')"><span class="tab-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2f/Netherite_Helmet_JE2_BE1.png/revision/latest?cb=20200304184001" alt="🛡️" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span>Armadura</button>
-  <button class="tab-btn" onclick="showTab('especials')"><span class="tab-icon"><img src="https://minecraft.wiki/images/Bow_JE2_BE1.png?c428a" alt="✨" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span>Especials</button>
+  <button class="tab-btn" onclick="showTab('especials')"><span class="tab-icon"><img src="https://minecraft.wiki/images/Bow_JE2_BE1.png?c428a" alt="✨" style="width:20px;height:20px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;"></span<span data-i18n="i18n_167">>Especials<</span>/button>
 </nav>
 
 <main>
@@ -467,15 +591,15 @@
   <div class="section active" id="armes">
 
     <div class="legend">
-      <div class="legend-title">Llegenda de Prioritats</div>
-      <div class="legend-item"><span class="priority priority-essential">Essencial</span> Imprescindible, posa'l sempre primer</div>
-      <div class="legend-item"><span class="priority priority-recomendado">Recomanat</span> Millora significativament l'objecte</div>
-      <div class="legend-item"><span class="priority priority-opcional">Opcional</span> Útil en situacions específiques</div>
-      <div class="legend-item"><span class="priority priority-exclusivo">Exclusiu</span> Incompatible amb altres opcions</div>
+      <div class="legend-title"><span data-i18n="i18n_131">Llegenda de Prioritats</span></div>
+      <div class="legend-item"><span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span> <span data-i18n="i18n_104">Imprescindible, posa'l sempre primer</span></div>
+      <div class="legend-item"><span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span> <span data-i18n="i18n_108">Millora significativament l'objecte</span></div>
+      <div class="legend-item"><span class="priority priority-opcional">Opcional</span> <span data-i18n="i18n_114">Útil en situacions específiques</span></div>
+      <div class="legend-item"><span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span> <span data-i18n="i18n_115">Incompatible amb altres opcions</span></div>
     </div>
 
-    <h2 class="section-title">⚔️ Armes de Combat</h2>
-    <p class="section-desc">Els millors encanteris per eliminar mobs i sobreviure al món hostil de Minecraft.</p>
+    <h2 class="section-title"><span data-i18n="i18n_146">⚔️ Armes de Combat</span></h2>
+    <p class="section-desc"><span data-i18n="i18n_32">Els millors encanteris per eliminar mobs i sobreviure al món hostil de Minecraft.</span></p>
 
     <div class="cards-grid">
 
@@ -484,8 +608,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest/scale-to-width/360?cb=20200304213920" alt="Espada"></span>
           <div>
-            <div class="card-title">Espasa</div>
-            <div class="card-subtitle">Sword · Arma principal de combat cos a cos</div>
+            <div class="card-title"><span data-i18n="i18n_177">Espasa</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_94">Sword · Arma principal de combat cos a cos</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -493,66 +617,66 @@
             <li class="ench-item">
               <span class="ench-level lvl-red">V</span>
               <div class="ench-info">
-                <div class="ench-name">Tall (Sharpness)</div>
-                <div class="ench-desc">+1.5 de dany per nivell. L'encanteri ofensiu més poderós contra tot tipus d'enemics.</div>
+                <div class="ench-name"><span data-i18n="i18n_155">Tall (Sharpness)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_20">+1.5 de dany per nivell. L'encanteri ofensiu més poderós contra tot tipus d'enemics.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Saqueig (Looting)</div>
-                <div class="ench-desc">Augmenta la quantitat i qualitat dels objectes que deixen caure els mobs en morir.</div>
+                <div class="ench-name"><span data-i18n="i18n_149">Saqueig (Looting)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_27">Augmenta la quantitat i qualitat dels objectes que deixen caure els mobs en morir.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Redueix la probabilitat que l'objecte es faci malbé amb cada ús.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_65">Redueix la probabilitat que l'objecte es faci malbé amb cada ús.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Utilitza l'experiència recollida per reparar automàticament l'objecte.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_51">Utilitza l'experiència recollida per reparar automàticament l'objecte.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-purple">II</span>
               <div class="ench-info">
-                <div class="ench-name">Empenta (Knockback)</div>
-                <div class="ench-desc">Allunya els enemics en colpejar-los, donant-te espai per maniobrar.</div>
+                <div class="ench-name"><span data-i18n="i18n_143">Empenta (Knockback)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_56">Allunya els enemics en colpejar-los, donant-te espai per maniobrar.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-red">II</span>
               <div class="ench-info">
-                <div class="ench-name">Ignició (Fire Aspect)</div>
-                <div class="ench-desc">Posa foc als enemics. Els animals deixen caure carn cuinada en morir.</div>
+                <div class="ench-name"><span data-i18n="i18n_134">Ignició (Fire Aspect)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_53">Posa foc als enemics. Els animals deixen caure carn cuinada en morir.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">V</span>
               <div class="ench-info">
-                <div class="ench-name">Perdició d'Artròpodes (Bane of Arthropods)</div>
-                <div class="ench-desc">+2.5 dany extra a aranyes, escarabats, abelles i endèrmites. Exclusiu amb Tall.</div>
+                <div class="ench-name"><span data-i18n="i18n_95">Perdició d'Artròpodes (Bane of Arthropods)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_37">+2.5 dany extra a aranyes, escarabats, abelles i endèrmites. Exclusiu amb Tall.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">V</span>
               <div class="ench-info">
-                <div class="ench-name">Destructor de No Morts (Smite)</div>
-                <div class="ench-desc">+2.5 dany extra a zombis, esquelets i no morts. Exclusiu amb Tall.</div>
+                <div class="ench-name"><span data-i18n="i18n_117">Destructor de No Morts (Smite)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_59">+2.5 dany extra a zombis, esquelets i no morts. Exclusiu amb Tall.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
           </ul>
           <div class="excl-note">⚠ <strong>Filo, Destructor de No Muertos y Perdición de Artrópodos son mutuamente excluyentes.</strong> En supervivencia general, usa siempre Filo V.</div>
@@ -564,8 +688,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/df/Netherite_Axe_JE2.png/revision/latest/scale-to-width/360?cb=20200522035253" alt="Hacha"></span>
           <div>
-            <div class="card-title">Destral (Combat)</div>
-            <div class="card-subtitle">Axe · Alternativa amb molt dany i major temps de recàrrega</div>
+            <div class="card-title"><span data-i18n="i18n_152">Destral (Combat)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_72">Axe · Alternativa amb molt dany i major temps de recàrrega</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -573,40 +697,40 @@
             <li class="ench-item">
               <span class="ench-level lvl-red">V</span>
               <div class="ench-info">
-                <div class="ench-name">Tall (Sharpness)</div>
-                <div class="ench-desc">Les destrals fan més dany base que les espases. Amb Tall V són devastadores.</div>
+                <div class="ench-name"><span data-i18n="i18n_155">Tall (Sharpness)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_42">Les destrals fan més dany base que les espases. Amb Tall V són devastadores.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Eficiència (Efficiency)</div>
-                <div class="ench-desc">També funciona com a eina de tala. Velocitat de tall millorada.</div>
+                <div class="ench-name"><span data-i18n="i18n_130">Eficiència (Efficiency)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_68">També funciona com a eina de tala. Velocitat de tall millorada.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Essencial per allargar la vida útil de la destral en combat i tala.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_57">Essencial per allargar la vida útil de la destral en combat i tala.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació amb experiència, fonamental per qualsevol objecte d'ús continu.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_39">Autoreparació amb experiència, fonamental per qualsevol objecte d'ús continu.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Fortuna (Fortune)</div>
-                <div class="ench-desc">En talar, pot multiplicar els objectes obtinguts de certes plantes i pomes.</div>
+                <div class="ench-name"><span data-i18n="i18n_150">Fortuna (Fortune)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_43">En talar, pot multiplicar els objectes obtinguts de certes plantes i pomes.</span></div>
               </div>
               <span class="priority priority-opcional">Opcional</span>
             </li>
@@ -620,8 +744,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://minecraft.wiki/images/Mace_JE1_BE1.png?90f67" alt="Maza"></span>
           <div>
-            <div class="card-title">Maza <span class="new-badge">NOVA 1.21</span></div>
-            <div class="card-subtitle">Mace · Arma de la Prova d'Armes, dany per caiguda</div>
+            <div class="card-title">Maza <span class="new-badge"><span data-i18n="i18n_171">NOVA 1.21</span></span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_84">Mace · Arma de la Prova d'Armes, dany per caiguda</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -629,42 +753,42 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Densitat (Density)</div>
-                <div class="ench-desc">Augmenta el dany base de la maça i amplifica el dany per caiguda exponencialment.</div>
+                <div class="ench-name"><span data-i18n="i18n_147">Densitat (Density)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_33">Augmenta el dany base de la maça i amplifica el dany per caiguda exponencialment.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-purple">III</span>
               <div class="ench-info">
-                <div class="ench-name">Perforació (Breach)</div>
-                <div class="ench-desc">Ignora fins al 75% de l'armadura de l'objectiu. Perfecte per a enemics ben equipats.</div>
+                <div class="ench-name"><span data-i18n="i18n_144">Perforació (Breach)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_21">Ignora fins al 75% de l'armadura de l'objectiu. Perfecte per a enemics ben equipats.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Cop de Vent (Wind Burst)</div>
-                <div class="ench-desc">En impactar, llança el jugador cap amunt, permetent combos de caigudes repetides.</div>
+                <div class="ench-name"><span data-i18n="i18n_126">Cop de Vent (Wind Burst)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_34">En impactar, llança el jugador cap amunt, permetent combos de caigudes repetides.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Redueix el desgast en combat actiu.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_109">Redueix el desgast en combat actiu.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació contínua amb experiència.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_102">Autoreparació contínua amb experiència.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Estratègia:</strong> Puja amunt, activa el vol amb èlitres o salta, i cau sobre l'enemic per a dany massiu. Amb Cop de Vent pots encadenar cops repetidament sense tocar terra.</div>
@@ -676,8 +800,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/ba/Trident_%28item%29.png/revision/latest/scale-to-width/360?cb=20200524232437" alt="Tridente"></span>
           <div>
-            <div class="card-title">Tridente</div>
-            <div class="card-subtitle">Trident · Versàtil: cos a cos, llançament i vol</div>
+            <div class="card-title"><span data-i18n="trident_title">Trident</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_88">Trident · Versàtil: cos a cos, llançament i vol</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -685,50 +809,50 @@
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Lleialtat (Loyalty)</div>
-                <div class="ench-desc">El trident torna a la teva mà després de ser llançat. Indispensable per no perdre'l.</div>
+                <div class="ench-name"><span data-i18n="i18n_145">Lleialtat (Loyalty)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_22">El trident torna a la teva mà després de ser llançat. Indispensable per no perdre'l.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-red">V</span>
               <div class="ench-info">
-                <div class="ench-name">Ímpetu (Impaling)</div>
-                <div class="ench-desc">+2.5 dany extra per nivell a mobs aquàtics (i a tots amb pluja/aigua en 1.21).</div>
+                <div class="ench-name"><span data-i18n="i18n_151">Ímpetu (Impaling)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_38">+2.5 dany extra per nivell a mobs aquàtics (i a tots amb pluja/aigua en 1.21).</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Fonamental per a un objecte tan difícil d'aconseguir.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_78">Fonamental per a un objecte tan difícil d'aconseguir.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Els tridentes no es poden craftear, reparar amb Mending és crític.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_60">Els tridentes no es poden craftear, reparar amb Mending és crític.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Canalització (Channeling)</div>
-                <div class="ench-desc">Invoca un llamp en impactar durant una tempesta. Converteix creepers en carregats.</div>
+                <div class="ench-name"><span data-i18n="i18n_123">Canalització (Channeling)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_28">Invoca un llamp en impactar durant una tempesta. Converteix creepers en carregats.</span></div>
               </div>
               <span class="priority priority-opcional">Opcional</span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-purple">I</span>
               <div class="ench-info">
-                <div class="ench-name">Aiguamàgia (Riptide)</div>
-                <div class="ench-desc">Propulsa el jugador en llançar el trident sota pluja o aigua. Exclusiu amb Lleialtat.</div>
+                <div class="ench-name"><span data-i18n="i18n_139">Aiguamàgia (Riptide)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_17">Propulsa el jugador en llançar el trident sota pluja o aigua. Exclusiu amb Lleialtat.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
           </ul>
           <div class="excl-note">⚠ <strong>Lleialtat i Aiguamàgia s'exclouen mútuament.</strong> Tria: trident de combat (Lleialtat) o trident de moviment (Aiguamàgia).</div>
@@ -741,8 +865,8 @@
   <!-- ===================== EINES ===================== -->
   <div class="section" id="eines">
 
-    <h2 class="section-title">⛏️ Eines</h2>
-    <p class="section-desc">Maximitza l'eficiència en mineria, construcció i recol·lecció de recursos.</p>
+    <h2 class="section-title"><span data-i18n="i18n_173">⛏️ Eines</span></h2>
+    <p class="section-desc"><span data-i18n="i18n_45">Maximitza l'eficiència en mineria, construcció i recol·lecció de recursos.</span></p>
 
     <div class="cards-grid">
 
@@ -751,8 +875,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Netherite_Pickaxe_JE3.png/revision/latest/scale-to-width/360?cb=20210418192807" alt="Pico"></span>
           <div>
-            <div class="card-title">Pica (Pickaxe)</div>
-            <div class="card-subtitle">L'eina més important del joc</div>
+            <div class="card-title"><span data-i18n="i18n_157">Pica (Pickaxe)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_120">L'eina més important del joc</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -760,42 +884,42 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Eficiència (Efficiency)</div>
-                <div class="ench-desc">Augmenta dràsticament la velocitat de mineria. Al nivell V, minar netherita és ràpid.</div>
+                <div class="ench-name"><span data-i18n="i18n_130">Eficiència (Efficiency)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_18">Augmenta dràsticament la velocitat de mineria. Al nivell V, minar netherita és ràpid.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Fortuna (Fortune)</div>
-                <div class="ench-desc">Multiplica els recursos obtinguts: fins a 4x diamants, 4x carbó, etc. El millor per a mineria.</div>
+                <div class="ench-name"><span data-i18n="i18n_150">Fortuna (Fortune)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_6">Multiplica els recursos obtinguts: fins a 4x diamants, 4x carbó, etc. El millor per a mineria.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Amb tant ús, Indestructible triplica aproximadament la durabilitat.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_58">Amb tant ús, Indestructible triplica aproximadament la durabilitat.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Imprescindible. Utilitza la XP de mineria per reparar-se automàticament.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_46">Imprescindible. Utilitza la XP de mineria per reparar-se automàticament.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Toc de Seda (Silk Touch)</div>
-                <div class="ench-desc">Obtén el bloc exacte: vidre, herba, ruscs, pedra, cristall. Exclusiu amb Fortuna.</div>
+                <div class="ench-name"><span data-i18n="i18n_125">Toc de Seda (Silk Touch)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_35">Obtén el bloc exacte: vidre, herba, ruscs, pedra, cristall. Exclusiu amb Fortuna.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Consejo:</strong> Tingues <em>dues piques</em>: una amb Fortuna III per minar minerals i una altra amb Toc de Seda per a blocs especials. Totes dues amb Eficiència V, Indestructible III i Reparació.</div>
@@ -808,8 +932,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://minecraft.wiki/images/Netherite_Shovel_JE2_BE1.png?0f765" alt="Pala"></span>
           <div>
-            <div class="card-title">Pala (Shovel)</div>
-            <div class="card-subtitle">Excavació de terra, sorra i grava ràpida</div>
+            <div class="card-title"><span data-i18n="i18n_160">Pala (Shovel)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_97">Excavació de terra, sorra i grava ràpida</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -817,40 +941,40 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Eficiència (Efficiency)</div>
-                <div class="ench-desc">Permet excavar blocs de terra, sorra i grava a velocitat extrema.</div>
+                <div class="ench-name"><span data-i18n="i18n_130">Eficiència (Efficiency)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_61">Permet excavar blocs de terra, sorra i grava a velocitat extrema.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Allarga la vida útil d'una eina d'ús freqüent.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_91">Allarga la vida útil d'una eina d'ús freqüent.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació essencial per a eines d'ús diari.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_89">Autoreparació essencial per a eines d'ús diari.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Fortuna (Fortune)</div>
-                <div class="ench-desc">Més llavors de cultius i materials de la terra. També més grijo.</div>
+                <div class="ench-name"><span data-i18n="i18n_150">Fortuna (Fortune)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_66">Més llavors de cultius i materials de la terra. També més grijo.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Toc de Seda (Silk Touch)</div>
-                <div class="ench-desc">Per recollir herba, gespa de miceli i altres blocs especials intactes.</div>
+                <div class="ench-name"><span data-i18n="i18n_125">Toc de Seda (Silk Touch)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_52">Per recollir herba, gespa de miceli i altres blocs especials intactes.</span></div>
               </div>
               <span class="priority priority-opcional">Opcional</span>
             </li>
@@ -863,8 +987,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/df/Netherite_Axe_JE2.png/revision/latest/scale-to-width/360?cb=20200522035253" alt="Hacha de tala"></span>
           <div>
-            <div class="card-title">Destral (Woodcutting)</div>
-            <div class="card-subtitle">Axe · Tala de fusta i materials de fusta</div>
+            <div class="card-title"><span data-i18n="i18n_133">Destral (Woodcutting)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_98">Axe · Tala de fusta i materials de fusta</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -872,40 +996,40 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Eficiència (Efficiency)</div>
-                <div class="ench-desc">Talla troncs gairebé instantàniament amb el nivell màxim.</div>
+                <div class="ench-name"><span data-i18n="i18n_130">Eficiència (Efficiency)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_74">Talla troncs gairebé instantàniament amb el nivell màxim.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Essencial per a una eina que s'utilitza contínuament.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_79">Essencial per a una eina que s'utilitza contínuament.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació amb experiència, vital per a eines d'ús intensiu.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_69">Autoreparació amb experiència, vital per a eines d'ús intensiu.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Fortuna (Fortune)</div>
-                <div class="ench-desc">Més pomes, pals i altres materials secundaris en talar.</div>
+                <div class="ench-name"><span data-i18n="i18n_150">Fortuna (Fortune)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_76">Més pomes, pals i altres materials secundaris en talar.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Toc de Seda (Silk Touch)</div>
-                <div class="ench-desc">Per recollir ruscs d'abelles sense destruir-los ni molestar les abelles.</div>
+                <div class="ench-name"><span data-i18n="i18n_125">Toc de Seda (Silk Touch)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_47">Per recollir ruscs d'abelles sense destruir-los ni molestar les abelles.</span></div>
               </div>
               <span class="priority priority-opcional">Opcional</span>
             </li>
@@ -918,8 +1042,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d7/Netherite_Hoe_JE2_BE2.png/revision/latest/scale-to-width/360?cb=20200526212455" alt="Azada"></span>
           <div>
-            <div class="card-title">Aixada (Hoe)</div>
-            <div class="card-subtitle">Agricultura i blocs de plantes en 1.21</div>
+            <div class="card-title"><span data-i18n="i18n_166">Aixada (Hoe)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_103">Agricultura i blocs de plantes en 1.21</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -927,40 +1051,40 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Eficiència (Efficiency)</div>
-                <div class="ench-desc">L'aixada de netherita amb Eficiència V destrueix blocs naturals (fulles, plantes) a l'instant.</div>
+                <div class="ench-name"><span data-i18n="i18n_130">Eficiència (Efficiency)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_7">L'aixada de netherita amb Eficiència V destrueix blocs naturals (fulles, plantes) a l'instant.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Fortuna (Fortune)</div>
-                <div class="ench-desc">Duplica o triplica les llavors i cultius en recol·lectar. Enormement útil en granges.</div>
+                <div class="ench-name"><span data-i18n="i18n_150">Fortuna (Fortune)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_19">Duplica o triplica les llavors i cultius en recol·lectar. Enormement útil en granges.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Allarga l'eina en granges d'alta producció.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_93">Allarga l'eina en granges d'alta producció.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació contínua, especialment útil en granges grans.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_71">Autoreparació contínua, especialment útil en granges grans.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Toc de Seda (Silk Touch)</div>
-                <div class="ench-desc">Per recollir fulles d'arbre completes o miceli sense trencar-les.</div>
+                <div class="ench-name"><span data-i18n="i18n_125">Toc de Seda (Silk Touch)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_62">Per recollir fulles d'arbre completes o miceli sense trencar-les.</span></div>
               </div>
               <span class="priority priority-opcional">Opcional</span>
             </li>
@@ -974,8 +1098,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5a/Shears_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20191012183756" alt="Tijeras"></span>
           <div>
-            <div class="card-title">Tisores (Shears)</div>
-            <div class="card-subtitle">Per a llana, fulles i plantes sense fer-les malbé</div>
+            <div class="card-title"><span data-i18n="i18n_153">Tisores (Shears)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_85">Per a llana, fulles i plantes sense fer-les malbé</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -983,26 +1107,26 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">V</span>
               <div class="ench-info">
-                <div class="ench-name">Eficiència (Efficiency)</div>
-                <div class="ench-desc">Permet esquilar ovelles i tallar fulles molt més ràpid.</div>
+                <div class="ench-name"><span data-i18n="i18n_130">Eficiència (Efficiency)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_77">Permet esquilar ovelles i tallar fulles molt més ràpid.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Les tisores es trenquen ràpid sense aquest encanteri.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_80">Les tisores es trenquen ràpid sense aquest encanteri.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
                 <div class="ench-desc">Autoreparación, muy útil en granjas de lana automatizadas.</div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Nota:</strong> Les tisores no admeten Fortuna ni Toc de Seda. Són eines especialitzades per a llana, fulles, enfiladisses i plantes.</div>
@@ -1014,8 +1138,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_es_gamepedia/images/c/c7/Fishing_Rod.png/revision/latest/scale-to-width/360?cb=20210513200612" alt="Caña de pescar"></span>
           <div>
-            <div class="card-title">Canya de Pescar (Fishing Rod)</div>
-            <div class="card-subtitle">Pesca i obtenció d'objectes rars</div>
+            <div class="card-title"><span data-i18n="i18n_119">Canya de Pescar (Fishing Rod)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_113">Pesca i obtenció d'objectes rars</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1023,34 +1147,34 @@
             <li class="ench-item">
               <span class="ench-level lvl-green">III</span>
               <div class="ench-info">
-                <div class="ench-name">Sort del Mar (Luck of the Sea)</div>
-                <div class="ench-desc">Augmenta la probabilitat d'obtenir objectes rars: encanteris, arcs, llibres i més.</div>
+                <div class="ench-name"><span data-i18n="i18n_118">Sort del Mar (Luck of the Sea)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_29">Augmenta la probabilitat d'obtenir objectes rars: encanteris, arcs, llibres i més.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">III</span>
               <div class="ench-info">
-                <div class="ench-name">Esquer (Lure)</div>
-                <div class="ench-desc">Redueix el temps d'espera entre cada mossegada. Al nivell III, els peixos mosseguen cada 5 segons.</div>
+                <div class="ench-name"><span data-i18n="i18n_163">Esquer (Lure)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_3">Redueix el temps d'espera entre cada mossegada. Al nivell III, els peixos mosseguen cada 5 segons.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">La canya es fa malbé amb cada ús, Indestructible la fa duradora.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_67">La canya es fa malbé amb cada ús, Indestructible la fa duradora.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Paradoxa útil: pescar et dona XP que repara la canya automàticament.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_55">Paradoxa útil: pescar et dona XP que repara la canya automàticament.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Estratègia d'inici:</strong> La pesca amb Sort del Mar III i Esquer III és la millor forma d'obtenir llibres encantats rars al principi del joc, incloent el propi <em>Reparació</em>.</div>
@@ -1063,8 +1187,8 @@
   <!-- ===================== ARMADURA ===================== -->
   <div class="section" id="armadura">
 
-    <h2 class="section-title">🛡️ Armadura Completa</h2>
-    <p class="section-desc">La configuració òptima d'armadura per resistir qualsevol amenaça a Minecraft Java 1.21.1.</p>
+    <h2 class="section-title"><span data-i18n="i18n_136">🛡️ Armadura Completa</span></h2>
+    <p class="section-desc"><span data-i18n="i18n_11">La configuració òptima d'armadura per resistir qualsevol amenaça a Minecraft Java 1.21.1.</span></p>
 
     <div class="cards-grid">
 
@@ -1073,8 +1197,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2f/Netherite_Helmet_JE2_BE1.png/revision/latest?cb=20200304184001" alt="Casco"></span>
           <div>
-            <div class="card-title">Casc (Helmet)</div>
-            <div class="card-subtitle">Protecció de cap i utilitat aquàtica</div>
+            <div class="card-title"><span data-i18n="i18n_161">Casc (Helmet)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_105">Protecció de cap i utilitat aquàtica</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1082,42 +1206,42 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">IV</span>
               <div class="ench-info">
-                <div class="ench-name">Protecció (Protection)</div>
-                <div class="ench-desc">Reducció de dany general del 4% per nivell. És el millor encanteri defensiu universal.</div>
+                <div class="ench-name"><span data-i18n="i18n_132">Protecció (Protection)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_13">Reducció de dany general del 4% per nivell. És el millor encanteri defensiu universal.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">III</span>
               <div class="ench-info">
-                <div class="ench-name">Respiració (Respiration)</div>
-                <div class="ench-desc">Estén el temps que pots estar sota l'aigua en 15s per nivell. A III, 60s sota l'aigua.</div>
+                <div class="ench-name"><span data-i18n="i18n_127">Respiració (Respiration)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_14">Estén el temps que pots estar sota l'aigua en 15s per nivell. A III, 60s sota l'aigua.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">I</span>
               <div class="ench-info">
-                <div class="ench-name">Afinitat Aquàtica (Aqua Affinity)</div>
-                <div class="ench-desc">Permet minar sota l'aigua a velocitat normal. Només necessita el nivell I per l'efecte complet.</div>
+                <div class="ench-name"><span data-i18n="i18n_112">Afinitat Aquàtica (Aqua Affinity)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_5">Permet minar sota l'aigua a velocitat normal. Només necessita el nivell I per l'efecte complet.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Triplica la durabilitat efectiva de l'armadura.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_90">Triplica la durabilitat efectiva de l'armadura.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació. Amb Reparació a tota l'armadura no gastaràs ferro en reparacions.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_36">Autoreparació. Amb Reparació a tota l'armadura no gastaràs ferro en reparacions.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Alternativa:</strong> Si no tens Protecció IV, utilitza Protecció contra Projectils IV al casc específicament si t'enfrontes sovint a esquelets o creepers.</div>
@@ -1129,8 +1253,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://minecraft.wiki/images/thumb/Netherite_Chestplate_JE2_BE1.png/160px-Netherite_Chestplate_JE2_BE1.png?53943" alt="Peto"></span>
           <div>
-            <div class="card-title">Plastró (Chestplate)</div>
-            <div class="card-subtitle">La peça de major protecció de l'armadura</div>
+            <div class="card-title"><span data-i18n="i18n_137">Plastró (Chestplate)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_99">La peça de major protecció de l'armadura</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1138,34 +1262,34 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">IV</span>
               <div class="ench-info">
-                <div class="ench-name">Protecció (Protection)</div>
-                <div class="ench-desc">Màxima reducció de dany general. El plastró és la peça més important de l'armadura.</div>
+                <div class="ench-name"><span data-i18n="i18n_132">Protecció (Protection)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_25">Màxima reducció de dany general. El plastró és la peça més important de l'armadura.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">El plastró absorbeix més dany i es desgasta més ràpid que altres peces.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_49">El plastró absorbeix més dany i es desgasta més ràpid que altres peces.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Imprescindible per mantenir la peça d'armadura més crítica en perfecte estat.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_40">Imprescindible per mantenir la peça d'armadura més crítica en perfecte estat.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-red">IV</span>
               <div class="ench-info">
-                <div class="ench-name">Prot. contra Explosions (Blast Protection)</div>
-                <div class="ench-desc">Redueix el dany d'explosions (creepers, TNT) en 8% per nivell. Exclusiu amb Protecció.</div>
+                <div class="ench-name"><span data-i18n="i18n_96">Prot. contra Explosions (Blast Protection)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_15">Redueix el dany d'explosions (creepers, TNT) en 8% per nivell. Exclusiu amb Protecció.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
           </ul>
           <div class="excl-note">⚠ Protecció, Prot. Explosions, Prot. Projectils i Prot. Foc s'exclouen mútuament. En supervivència general, Protecció IV és la millor opció.</div>
@@ -1177,8 +1301,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8d/Netherite_Leggings_JE3_BE2.png/revision/latest?cb=20201027181357" alt="Pantalones"></span>
           <div>
-            <div class="card-title">Pantalons (Leggings)</div>
-            <div class="card-subtitle">Protecció i velocitat en combat</div>
+            <div class="card-title"><span data-i18n="i18n_138">Pantalons (Leggings)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_116">Protecció i velocitat en combat</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1186,34 +1310,34 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">IV</span>
               <div class="ench-info">
-                <div class="ench-name">Protecció (Protection)</div>
-                <div class="ench-desc">Reducció de dany estàndard. Els pantalons són la segona peça amb més punts d'armadura.</div>
+                <div class="ench-name"><span data-i18n="i18n_132">Protecció (Protection)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_16">Reducció de dany estàndard. Els pantalons són la segona peça amb més punts d'armadura.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-purple">III</span>
               <div class="ench-info">
-                <div class="ench-name">Sigil Ràpid (Swift Sneak)</div>
-                <div class="ench-desc">Permet moure't més ràpid mentre et poses en cura. Molt útil en construcció i sigil.</div>
+                <div class="ench-name"><span data-i18n="i18n_124">Sigil Ràpid (Swift Sneak)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_26">Permet moure't més ràpid mentre et poses en cura. Molt útil en construcció i sigil.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Redueix el desgast en combat actiu.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_109">Redueix el desgast en combat actiu.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació contínua per a armadura d'ús diari.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_86">Autoreparació contínua per a armadura d'ús diari.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Nota:</strong> Sigil Ràpid III només s'obté a la Ciutat Antiga (Ancient City). Val la pena explorar-la específicament per aconseguir-lo.</div>
@@ -1225,8 +1349,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/60/Netherite_Boots_JE2_BE1.png/revision/latest/scale-to-width/360?cb=20200304183926" alt="Botas"></span>
           <div>
-            <div class="card-title">Botes (Boots)</div>
-            <div class="card-subtitle">Mobilitat i resistència ambiental</div>
+            <div class="card-title"><span data-i18n="i18n_162">Botes (Boots)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_111">Mobilitat i resistència ambiental</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1234,50 +1358,50 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">IV</span>
               <div class="ench-info">
-                <div class="ench-name">Protecció (Protection)</div>
-                <div class="ench-desc">Reducció de dany general, fonamental en qualsevol build defensiu.</div>
+                <div class="ench-name"><span data-i18n="i18n_132">Protecció (Protection)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_63">Reducció de dany general, fonamental en qualsevol build defensiu.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-green">IV</span>
               <div class="ench-info">
-                <div class="ench-name">Caiguda de Ploma (Feather Falling)</div>
-                <div class="ench-desc">Redueix fins al 48% del dany per caiguda. Probablement et salva la vida més vegades que qualsevol altre encanteri.</div>
+                <div class="ench-name"><span data-i18n="i18n_110">Caiguda de Ploma (Feather Falling)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_0">Redueix fins al 48% del dany per caiguda. Probablement et salva la vida més vegades que qualsevol altre encanteri.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">III</span>
               <div class="ench-info">
-                <div class="ench-name">Profunditats del Mar (Depth Strider)</div>
-                <div class="ench-desc">Mou-te a velocitat gairebé normal sota l'aigua. Al nivell III, sense penalització aquàtica.</div>
+                <div class="ench-name"><span data-i18n="i18n_106">Profunditats del Mar (Depth Strider)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_9">Mou-te a velocitat gairebé normal sota l'aigua. Al nivell III, sense penalització aquàtica.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">III</span>
               <div class="ench-info">
-                <div class="ench-name">Velocitat de les Ànimes (Soul Speed)</div>
-                <div class="ench-desc">Corres més ràpid en sorra d'ànimes i sòl d'ànimes del Nether. Exclusiu amb Profunditats del Mar.</div>
+                <div class="ench-name"><span data-i18n="i18n_107">Velocitat de les Ànimes (Soul Speed)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_4">Corres més ràpid en sorra d'ànimes i sòl d'ànimes del Nether. Exclusiu amb Profunditats del Mar.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Les botes es gasten amb el moviment constant.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_92">Les botes es gasten amb el moviment constant.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació essencial per no quedar-se sense botes en moments crítics.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_48">Autoreparació essencial per no quedar-se sense botes en moments crítics.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="excl-note">⚠ Profunditats del Mar i Velocitat de les Ànimes són incompatibles. Tria segons el teu entorn principal de joc.</div>
@@ -1290,8 +1414,8 @@
   <!-- ===================== ESPECIALS ===================== -->
   <div class="section" id="especials">
 
-    <h2 class="section-title">✨ Armes a Distància</h2>
-    <p class="section-desc">Encanteris per a arc, ballesta i combat a distància.</p>
+    <h2 class="section-title"><span data-i18n="i18n_140">✨ Armes a Distància</span></h2>
+    <p class="section-desc"><span data-i18n="i18n_81">Encanteris per a arc, ballesta i combat a distància.</span></p>
 
     <div class="cards-grid">
 
@@ -1300,8 +1424,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://minecraft.wiki/images/Bow_JE2_BE1.png?c428a" alt="Arco"></span>
           <div>
-            <div class="card-title">Arc (Bow)</div>
-            <div class="card-subtitle">L'arma a distància més versàtil del joc</div>
+            <div class="card-title"><span data-i18n="i18n_172">Arc (Bow)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_101">L'arma a distància més versàtil del joc</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1309,50 +1433,50 @@
             <li class="ench-item">
               <span class="ench-level lvl-red">V</span>
               <div class="ench-info">
-                <div class="ench-name">Poder (Power)</div>
-                <div class="ench-desc">+25% de dany per fletxa per nivell. Al nivell V, una fletxa carregada pot matar d'un cop.</div>
+                <div class="ench-name"><span data-i18n="i18n_164">Poder (Power)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_12">+25% de dany per fletxa per nivell. Al nivell V, una fletxa carregada pot matar d'un cop.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">I</span>
               <div class="ench-info">
-                <div class="ench-name">Infinit (Infinity)</div>
-                <div class="ench-desc">Dispara fletxes sense gastar-les (necessites almenys 1 fletxa a l'inventari). Exclusiu amb Reparació.</div>
+                <div class="ench-name"><span data-i18n="i18n_148">Infinit (Infinity)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_1">Dispara fletxes sense gastar-les (necessites almenys 1 fletxa a l'inventari). Exclusiu amb Reparació.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-red">I</span>
               <div class="ench-info">
-                <div class="ench-name">Flames (Flame)</div>
-                <div class="ench-desc">Les fletxes posen foc als enemics. Activa dispensadors, fogueres i TNT.</div>
+                <div class="ench-name"><span data-i18n="i18n_159">Flames (Flame)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_50">Les fletxes posen foc als enemics. Activa dispensadors, fogueres i TNT.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-purple">II</span>
               <div class="ench-info">
-                <div class="ench-name">Retrocés (Punch)</div>
-                <div class="ench-desc">Allunya els enemics amb cada impacte. Útil per mantenir la distància de seguretat.</div>
+                <div class="ench-name"><span data-i18n="i18n_156">Retrocés (Punch)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_30">Allunya els enemics amb cada impacte. Útil per mantenir la distància de seguretat.</span></div>
               </div>
-              <span class="priority priority-recomendado">Recomanat</span>
+              <span class="priority priority-recomendado"<span data-i18n="i18n_169">>Recomanat<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Allarga la vida de l'arc en enfrontaments llargs.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_87">Allarga la vida de l'arc en enfrontaments llargs.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Si no uses Infinit, Reparació et permet reparar l'arc. Són incompatibles entre ells.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_23">Si no uses Infinit, Reparació et permet reparar l'arc. Són incompatibles entre ells.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
           </ul>
           <div class="excl-note">⚠ Infinit i Reparació són incompatibles. L'arc amb Infinit necessita manteniment manual. Molts prefereixen Reparació per al end-game.</div>
@@ -1364,8 +1488,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://minecraft.wiki/images/MCD_Crossbow.png?60c34" alt="Ballesta"></span>
           <div>
-            <div class="card-title">Ballesta (Crossbow)</div>
-            <div class="card-subtitle">Més potència per disparo, ideal per a múltiples objectius</div>
+            <div class="card-title"><span data-i18n="i18n_141">Ballesta (Crossbow)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_73">Més potència per disparo, ideal per a múltiples objectius</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1373,42 +1497,42 @@
             <li class="ench-item">
               <span class="ench-level lvl-red">III</span>
               <div class="ench-info">
-                <div class="ench-name">Perforació (Piercing)</div>
-                <div class="ench-desc">Les fletxes travessen fins a 4 enemics. Extraordinari contra grups de mobs.</div>
+                <div class="ench-name"><span data-i18n="i18n_135">Perforació (Piercing)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_44">Les fletxes travessen fins a 4 enemics. Extraordinari contra grups de mobs.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-blue">III</span>
               <div class="ench-info">
-                <div class="ench-name">Celeritat (Quick Charge)</div>
-                <div class="ench-desc">Redueix el temps de recàrrega a 0.25s per nivell. A III, la recàrrega és gairebé instantània.</div>
+                <div class="ench-name"><span data-i18n="i18n_128">Celeritat (Quick Charge)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_8">Redueix el temps de recàrrega a 0.25s per nivell. A III, la recàrrega és gairebé instantània.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">La ballesta es desgasta amb l'ús intensiu en combat.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_83">La ballesta es desgasta amb l'ús intensiu en combat.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació amb experiència per mantenir la ballesta operativa.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_64">Autoreparació amb experiència per mantenir la ballesta operativa.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-purple">I</span>
               <div class="ench-info">
-                <div class="ench-name">Multidisparo (Multishot)</div>
-                <div class="ench-desc">Dispara 3 fletxes alhora en un angle de 10°. Exclusiu amb Perforació.</div>
+                <div class="ench-name"><span data-i18n="i18n_129">Multidisparo (Multishot)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_54">Dispara 3 fletxes alhora en un angle de 10°. Exclusiu amb Perforació.</span></div>
               </div>
-              <span class="priority priority-exclusivo">Exclusiu</span>
+              <span class="priority priority-exclusivo"<span data-i18n="i18n_170">>Exclusiu<</span>/span>
             </li>
           </ul>
           <div class="excl-note">⚠ Perforació i Multidisparo són incompatibles. Perforació és millor per a mobs en fila. Multidisparo és millor contra grups dispersos.</div>
@@ -1420,8 +1544,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c6/Shield_JE2_BE1.png/revision/latest?cb=20190725172341" alt="Escudo"></span>
           <div>
-            <div class="card-title">Escut (Shield)</div>
-            <div class="card-subtitle">Defensa activa contra projectils i atacs</div>
+            <div class="card-title"><span data-i18n="i18n_158">Escut (Shield)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_100">Defensa activa contra projectils i atacs</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1429,18 +1553,18 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">L'escut absorbeix molt dany. Sense Indestructible es trenca amb sorprenent rapidesa.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_24">L'escut absorbeix molt dany. Sense Indestructible es trenca amb sorprenent rapidesa.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Autoreparació vital per a l'escut, que pot degradar-se molt ràpid en combat actiu.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_31">Autoreparació vital per a l'escut, que pot degradar-se molt ràpid en combat actiu.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Nota:</strong> En 1.21.1 l'escut només admet Indestructible i Reparació com a encanteris. Continua sent fonamental per bloquejar projectils, explosions i atacs cos a cos.</div>
@@ -1452,8 +1576,8 @@
         <div class="card-header">
           <span class="card-icon"><img src="https://cdn.apexminecrafthosting.com/img/uploads/2022/03/28151238/elytra.png" alt="Élitros"></span>
           <div>
-            <div class="card-title">Èlitres (Elytra)</div>
-            <div class="card-subtitle">L'objecte de vol del End, imprescindible en end-game</div>
+            <div class="card-title"><span data-i18n="i18n_154">Èlitres (Elytra)</span></div>
+            <div class="card-subtitle"><span data-i18n="i18n_82">L'objecte de vol del End, imprescindible en end-game</span></div>
           </div>
         </div>
         <div class="card-body">
@@ -1461,18 +1585,18 @@
             <li class="ench-item">
               <span class="ench-level lvl-gold">III</span>
               <div class="ench-info">
-                <div class="ench-name">Indestructible (Unbreaking)</div>
-                <div class="ench-desc">Les èlitres es degraden amb cada segon de vol. Indestructible III les fa 3-4 vegades més duradores.</div>
+                <div class="ench-name"><span data-i18n="i18n_121">Indestructible (Unbreaking)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_2">Les èlitres es degraden amb cada segon de vol. Indestructible III les fa 3-4 vegades més duradores.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
             <li class="ench-item">
               <span class="ench-level lvl-cyan">∞</span>
               <div class="ench-info">
-                <div class="ench-name">Reparació (Mending)</div>
-                <div class="ench-desc">Essencial: repara les èlitres amb XP recollida durant el vol o en matar mobs.</div>
+                <div class="ench-name"><span data-i18n="i18n_142">Reparació (Mending)</span></div>
+                <div class="ench-desc"><span data-i18n="i18n_41">Essencial: repara les èlitres amb XP recollida durant el vol o en matar mobs.</span></div>
               </div>
-              <span class="priority priority-essential">Essencial</span>
+              <span class="priority priority-essential"<span data-i18n="i18n_168">>Essencial<</span>/span>
             </li>
           </ul>
           <div class="card-note"><strong>Estratègia end-game:</strong> Combina les èlitres amb coets de focs artificials (2-3 estrelles de pólvora) per al vol propulsat. Amb Indestructible III i Reparació, les èlitres duren indefinidament si reculls prou experiència.</div>
@@ -1485,7 +1609,7 @@
 </main>
 
 <footer>
-  Guia per a Minecraft Java Edition 1.21.1 · Mode Supervivència Normal · Sense mods ni trucs
+  <span data-i18n="i18n_10">Guia per a Minecraft Java Edition 1.21.1 · Mode Supervivència Normal · Sense mods ni trucs</span>
 </footer>
 
 <script>
@@ -1518,6 +1642,413 @@
       card.style.animation = `card-in 0.5s ease ${i * 0.07}s backwards`;
     });
   }
+
+  // Theme toggle
+  let isDark = true;
+  function toggleTheme() {
+    isDark = !isDark;
+    document.body.classList.toggle('light', !isDark);
+    const icon = document.getElementById('theme-icon');
+    const label = document.getElementById('theme-label');
+    if (isDark) {
+      icon.textContent = '☀️';
+      label.textContent = currentLang === 'ca' ? 'CLAR' : 'CLARO';
+    } else {
+      icon.textContent = '🌙';
+      label.textContent = currentLang === 'ca' ? 'FOSC' : 'OSCURO';
+    }
+    icon.style.transform = isDark ? 'rotate(0deg)' : 'rotate(180deg)';
+  }
+  const translations = {
+    ca: {
+  "i18n_0": "Redueix fins al 48% del dany per caiguda. Probablement et salva la vida més vegades que qualsevol altre encanteri.",
+  "i18n_1": "Dispara fletxes sense gastar-les (necessites almenys 1 fletxa a l'inventari). Exclusiu amb Reparació.",
+  "i18n_2": "Les èlitres es degraden amb cada segon de vol. Indestructible III les fa 3-4 vegades més duradores.",
+  "i18n_3": "Redueix el temps d'espera entre cada mossegada. Al nivell III, els peixos mosseguen cada 5 segons.",
+  "i18n_4": "Corres més ràpid en sorra d'ànimes i sòl d'ànimes del Nether. Exclusiu amb Profunditats del Mar.",
+  "i18n_5": "Permet minar sota l'aigua a velocitat normal. Només necessita el nivell I per l'efecte complet.",
+  "i18n_6": "Multiplica els recursos obtinguts: fins a 4x diamants, 4x carbó, etc. El millor per a mineria.",
+  "i18n_7": "L'aixada de netherita amb Eficiència V destrueix blocs naturals (fulles, plantes) a l'instant.",
+  "i18n_8": "Redueix el temps de recàrrega a 0.25s per nivell. A III, la recàrrega és gairebé instantània.",
+  "i18n_9": "Mou-te a velocitat gairebé normal sota l'aigua. Al nivell III, sense penalització aquàtica.",
+  "i18n_10": "Guia per a Minecraft Java Edition 1.21.1 · Mode Supervivència Normal · Sense mods ni trucs",
+  "i18n_11": "La configuració òptima d'armadura per resistir qualsevol amenaça a Minecraft Java 1.21.1.",
+  "i18n_12": "+25% de dany per fletxa per nivell. Al nivell V, una fletxa carregada pot matar d'un cop.",
+  "i18n_13": "Reducció de dany general del 4% per nivell. És el millor encanteri defensiu universal.",
+  "i18n_14": "Estén el temps que pots estar sota l'aigua en 15s per nivell. A III, 60s sota l'aigua.",
+  "i18n_15": "Redueix el dany d'explosions (creepers, TNT) en 8% per nivell. Exclusiu amb Protecció.",
+  "i18n_16": "Reducció de dany estàndard. Els pantalons són la segona peça amb més punts d'armadura.",
+  "i18n_17": "Propulsa el jugador en llançar el trident sota pluja o aigua. Exclusiu amb Lleialtat.",
+  "i18n_18": "Augmenta dràsticament la velocitat de mineria. Al nivell V, minar netherita és ràpid.",
+  "i18n_19": "Duplica o triplica les llavors i cultius en recol·lectar. Enormement útil en granges.",
+  "i18n_20": "+1.5 de dany per nivell. L'encanteri ofensiu més poderós contra tot tipus d'enemics.",
+  "i18n_21": "Ignora fins al 75% de l'armadura de l'objectiu. Perfecte per a enemics ben equipats.",
+  "i18n_22": "El trident torna a la teva mà després de ser llançat. Indispensable per no perdre'l.",
+  "i18n_23": "Si no uses Infinit, Reparació et permet reparar l'arc. Són incompatibles entre ells.",
+  "i18n_24": "L'escut absorbeix molt dany. Sense Indestructible es trenca amb sorprenent rapidesa.",
+  "i18n_25": "Màxima reducció de dany general. El plastró és la peça més important de l'armadura.",
+  "i18n_26": "Permet moure't més ràpid mentre et poses en cura. Molt útil en construcció i sigil.",
+  "i18n_27": "Augmenta la quantitat i qualitat dels objectes que deixen caure els mobs en morir.",
+  "i18n_28": "Invoca un llamp en impactar durant una tempesta. Converteix creepers en carregats.",
+  "i18n_29": "Augmenta la probabilitat d'obtenir objectes rars: encanteris, arcs, llibres i més.",
+  "i18n_30": "Allunya els enemics amb cada impacte. Útil per mantenir la distància de seguretat.",
+  "i18n_31": "Autoreparació vital per a l'escut, que pot degradar-se molt ràpid en combat actiu.",
+  "i18n_32": "Els millors encanteris per eliminar mobs i sobreviure al món hostil de Minecraft.",
+  "i18n_33": "Augmenta el dany base de la maça i amplifica el dany per caiguda exponencialment.",
+  "i18n_34": "En impactar, llança el jugador cap amunt, permetent combos de caigudes repetides.",
+  "i18n_35": "Obtén el bloc exacte: vidre, herba, ruscs, pedra, cristall. Exclusiu amb Fortuna.",
+  "i18n_36": "Autoreparació. Amb Reparació a tota l'armadura no gastaràs ferro en reparacions.",
+  "i18n_37": "+2.5 dany extra a aranyes, escarabats, abelles i endèrmites. Exclusiu amb Tall.",
+  "i18n_38": "+2.5 dany extra per nivell a mobs aquàtics (i a tots amb pluja/aigua en 1.21).",
+  "i18n_39": "Autoreparació amb experiència, fonamental per qualsevol objecte d'ús continu.",
+  "i18n_40": "Imprescindible per mantenir la peça d'armadura més crítica en perfecte estat.",
+  "i18n_41": "Essencial: repara les èlitres amb XP recollida durant el vol o en matar mobs.",
+  "i18n_42": "Les destrals fan més dany base que les espases. Amb Tall V són devastadores.",
+  "i18n_43": "En talar, pot multiplicar els objectes obtinguts de certes plantes i pomes.",
+  "i18n_44": "Les fletxes travessen fins a 4 enemics. Extraordinari contra grups de mobs.",
+  "i18n_45": "Maximitza l'eficiència en mineria, construcció i recol·lecció de recursos.",
+  "i18n_46": "Imprescindible. Utilitza la XP de mineria per reparar-se automàticament.",
+  "i18n_47": "Per recollir ruscs d'abelles sense destruir-los ni molestar les abelles.",
+  "i18n_48": "Autoreparació essencial per no quedar-se sense botes en moments crítics.",
+  "i18n_49": "El plastró absorbeix més dany i es desgasta més ràpid que altres peces.",
+  "i18n_50": "Les fletxes posen foc als enemics. Activa dispensadors, fogueres i TNT.",
+  "i18n_51": "Utilitza l'experiència recollida per reparar automàticament l'objecte.",
+  "i18n_52": "Per recollir herba, gespa de miceli i altres blocs especials intactes.",
+  "i18n_53": "Posa foc als enemics. Els animals deixen caure carn cuinada en morir.",
+  "i18n_54": "Dispara 3 fletxes alhora en un angle de 10°. Exclusiu amb Perforació.",
+  "i18n_55": "Paradoxa útil: pescar et dona XP que repara la canya automàticament.",
+  "i18n_56": "Allunya els enemics en colpejar-los, donant-te espai per maniobrar.",
+  "i18n_57": "Essencial per allargar la vida útil de la destral en combat i tala.",
+  "i18n_58": "Amb tant ús, Indestructible triplica aproximadament la durabilitat.",
+  "i18n_59": "+2.5 dany extra a zombis, esquelets i no morts. Exclusiu amb Tall.",
+  "i18n_60": "Els tridentes no es poden craftear, reparar amb Mending és crític.",
+  "i18n_61": "Permet excavar blocs de terra, sorra i grava a velocitat extrema.",
+  "i18n_62": "Per recollir fulles d'arbre completes o miceli sense trencar-les.",
+  "i18n_63": "Reducció de dany general, fonamental en qualsevol build defensiu.",
+  "i18n_64": "Autoreparació amb experiència per mantenir la ballesta operativa.",
+  "i18n_65": "Redueix la probabilitat que l'objecte es faci malbé amb cada ús.",
+  "i18n_66": "Més llavors de cultius i materials de la terra. També més grijo.",
+  "i18n_67": "La canya es fa malbé amb cada ús, Indestructible la fa duradora.",
+  "i18n_68": "També funciona com a eina de tala. Velocitat de tall millorada.",
+  "i18n_69": "Autoreparació amb experiència, vital per a eines d'ús intensiu.",
+  "i18n_70": "Minecraft Java Edition · Versió 1.21.1 · Mode Supervivència",
+  "i18n_71": "Autoreparació contínua, especialment útil en granges grans.",
+  "i18n_72": "Axe · Alternativa amb molt dany i major temps de recàrrega",
+  "i18n_73": "Més potència per disparo, ideal per a múltiples objectius",
+  "i18n_74": "Talla troncs gairebé instantàniament amb el nivell màxim.",
+  "i18n_75": "La guia definitiva per maximitzar la teva supervivència",
+  "i18n_76": "Més pomes, pals i altres materials secundaris en talar.",
+  "i18n_77": "Permet esquilar ovelles i tallar fulles molt més ràpid.",
+  "i18n_78": "Fonamental per a un objecte tan difícil d'aconseguir.",
+  "i18n_79": "Essencial per a una eina que s'utilitza contínuament.",
+  "i18n_80": "Les tisores es trenquen ràpid sense aquest encanteri.",
+  "i18n_81": "Encanteris per a arc, ballesta i combat a distància.",
+  "i18n_82": "L'objecte de vol del End, imprescindible en end-game",
+  "i18n_83": "La ballesta es desgasta amb l'ús intensiu en combat.",
+  "i18n_84": "Mace · Arma de la Prova d'Armes, dany per caiguda",
+  "i18n_85": "Per a llana, fulles i plantes sense fer-les malbé",
+  "i18n_86": "Autoreparació contínua per a armadura d'ús diari.",
+  "i18n_87": "Allarga la vida de l'arc en enfrontaments llargs.",
+  "i18n_88": "Trident · Versàtil: cos a cos, llançament i vol",
+  "i18n_89": "Autoreparació essencial per a eines d'ús diari.",
+  "i18n_90": "Triplica la durabilitat efectiva de l'armadura.",
+  "i18n_91": "Allarga la vida útil d'una eina d'ús freqüent.",
+  "i18n_92": "Les botes es gasten amb el moviment constant.",
+  "i18n_93": "Allarga l'eina en granges d'alta producció.",
+  "i18n_94": "Sword · Arma principal de combat cos a cos",
+  "i18n_95": "Perdició d'Artròpodes (Bane of Arthropods)",
+  "i18n_96": "Prot. contra Explosions (Blast Protection)",
+  "i18n_97": "Excavació de terra, sorra i grava ràpida",
+  "i18n_98": "Axe · Tala de fusta i materials de fusta",
+  "i18n_99": "La peça de major protecció de l'armadura",
+  "i18n_100": "Defensa activa contra projectils i atacs",
+  "i18n_101": "L'arma a distància més versàtil del joc",
+  "i18n_102": "Autoreparació contínua amb experiència.",
+  "i18n_103": "Agricultura i blocs de plantes en 1.21",
+  "i18n_104": "Imprescindible, posa'l sempre primer",
+  "i18n_105": "Protecció de cap i utilitat aquàtica",
+  "i18n_106": "Profunditats del Mar (Depth Strider)",
+  "i18n_107": "Velocitat de les Ànimes (Soul Speed)",
+  "i18n_108": "Millora significativament l'objecte",
+  "i18n_109": "Redueix el desgast en combat actiu.",
+  "i18n_110": "Caiguda de Ploma (Feather Falling)",
+  "i18n_111": "Mobilitat i resistència ambiental",
+  "i18n_112": "Afinitat Aquàtica (Aqua Affinity)",
+  "i18n_113": "Pesca i obtenció d'objectes rars",
+  "i18n_114": "Útil en situacions específiques",
+  "i18n_115": "Incompatible amb altres opcions",
+  "i18n_116": "Protecció i velocitat en combat",
+  "i18n_117": "Destructor de No Morts (Smite)",
+  "i18n_118": "Sort del Mar (Luck of the Sea)",
+  "i18n_119": "Canya de Pescar (Fishing Rod)",
+  "i18n_120": "L'eina més important del joc",
+  "i18n_121": "Indestructible (Unbreaking)",
+  "i18n_122": "Guia Completa d'Encanteris",
+  "i18n_123": "Canalització (Channeling)",
+  "i18n_124": "Sigil Ràpid (Swift Sneak)",
+  "i18n_125": "Toc de Seda (Silk Touch)",
+  "i18n_126": "Cop de Vent (Wind Burst)",
+  "i18n_127": "Respiració (Respiration)",
+  "i18n_128": "Celeritat (Quick Charge)",
+  "i18n_129": "Multidisparo (Multishot)",
+  "i18n_130": "Eficiència (Efficiency)",
+  "i18n_131": "Llegenda de Prioritats",
+  "i18n_132": "Protecció (Protection)",
+  "i18n_133": "Destral (Woodcutting)",
+  "i18n_134": "Ignició (Fire Aspect)",
+  "i18n_135": "Perforació (Piercing)",
+  "i18n_136": "🛡️ Armadura Completa",
+  "i18n_137": "Plastró (Chestplate)",
+  "i18n_138": "Pantalons (Leggings)",
+  "i18n_139": "Aiguamàgia (Riptide)",
+  "i18n_140": "✨ Armes a Distància",
+  "i18n_141": "Ballesta (Crossbow)",
+  "i18n_142": "Reparació (Mending)",
+  "i18n_143": "Empenta (Knockback)",
+  "i18n_144": "Perforació (Breach)",
+  "i18n_145": "Lleialtat (Loyalty)",
+  "i18n_146": "⚔️ Armes de Combat",
+  "i18n_147": "Densitat (Density)",
+  "i18n_148": "Infinit (Infinity)",
+  "i18n_149": "Saqueig (Looting)",
+  "i18n_150": "Fortuna (Fortune)",
+  "i18n_151": "Ímpetu (Impaling)",
+  "i18n_152": "Destral (Combat)",
+  "i18n_153": "Tisores (Shears)",
+  "i18n_154": "Èlitres (Elytra)",
+  "i18n_155": "Tall (Sharpness)",
+  "i18n_156": "Retrocés (Punch)",
+  "i18n_157": "Pica (Pickaxe)",
+  "i18n_158": "Escut (Shield)",
+  "i18n_159": "Flames (Flame)",
+  "i18n_160": "Pala (Shovel)",
+  "i18n_161": "Casc (Helmet)",
+  "i18n_162": "Botes (Boots)",
+  "i18n_163": "Esquer (Lure)",
+  "i18n_164": "Poder (Power)",
+  "i18n_165": "D'ENCANTERIS",
+  "i18n_166": "Aixada (Hoe)",
+  "i18n_167": ">Especials<",
+  "i18n_168": ">Essencial<",
+  "i18n_169": ">Recomanat<",
+  "i18n_170": ">Exclusiu<",
+  "i18n_171": "NOVA 1.21",
+  "i18n_172": "Arc (Bow)",
+  "i18n_173": "⛏️ Eines",
+  "i18n_174": "GRIMORI",
+  "i18n_175": ">Armes<",
+  "i18n_176": ">Eines<",
+  "i18n_177": "Espasa"
+},
+    es: {
+  "i18n_0": "Reduce hasta el 48% del daño por caída. Probablemente salva tu vida más veces que cualquier otro encantamiento.",
+  "i18n_1": "Dispara flechas sin gastarlas (necesitas al menos 1 flecha en el inventario). Exclusivo con Munición.",
+  "i18n_2": "Los élitros se degradan con cada segundo de vuelo. Irrompibilidad III los hace 3-4 veces más duraderos.",
+  "i18n_3": "Reduce el tiempo de espera entre cada mordida. A nivel III, los peces muerden cada 5 segundos.",
+  "i18n_4": "Corres más rápido en arena de almas y suelo de almas del Nether. Exclusivo con Profundidades del Mar.",
+  "i18n_5": "Permite minar bajo el agua a velocidad normal. Solo necesita nivel I para el efecto completo.",
+  "i18n_6": "Multiplica los recursos obtenidos: hasta 4x diamantes, 4x carbón, etc. El mejor para minería.",
+  "i18n_7": "La azada de netherita con Eficiencia V destruye bloques naturales (hojas, plantas) al instante.",
+  "i18n_8": "Reduce el tiempo de recarga a 0.25s por nivel. A III, la recarga es casi instantánea.",
+  "i18n_9": "Muévete a velocidad casi normal bajo el agua. A nivel III, sin penalización acuática.",
+  "i18n_10": "Guía para Minecraft Java Edition 1.21.1 · Modo Supervivencia Normal · Sin mods ni trucos",
+  "i18n_11": "La configuración óptima de armadura para resistir cualquier amenaza en Minecraft Java 1.21.1.",
+  "i18n_12": "+25% de daño por flecha por nivel. A nivel V, una flecha cargada puede matar de un golpe.",
+  "i18n_13": "Reducción de daño general del 4% por nivel. Es el mejor encantamiento defensivo universal.",
+  "i18n_14": "Extiende el tiempo que puedes estar bajo el agua en 15s por nivel. A III, 60s bajo agua.",
+  "i18n_15": "Reduce el daño de explosiones (creepers, TNT) en 8% por nivel. Exclusivo con Protección.",
+  "i18n_16": "Reducción de daño estándar. Las polainas son la segunda pieza con más puntos de armadura.",
+  "i18n_17": "Propulsa al jugador al lanzar el tridente bajo lluvia o agua. Exclusivo con Lealtad.",
+  "i18n_18": "Aumenta drásticamente la velocidad de minería. A nivel V, minar netherita es rápido.",
+  "i18n_19": "Duplica o triplica las semillas y cultivos al recolectar. Enormemente útil en granjas.",
+  "i18n_20": "+1.5 de daño por nivel. El encantamiento ofensivo más poderoso contra todo tipo de enemigos.",
+  "i18n_21": "Ignora hasta el 75% de la armadura del objetivo. Perfecto para enemigos bien equipados.",
+  "i18n_22": "El tridente regresa a tu mano después de ser lanzado. Indispensable para no perderlo.",
+  "i18n_23": "Si no usas Infinito, Mending te permite reparar el arco. Son incompatibles entre sí.",
+  "i18n_24": "El escudo absorbe mucho daño. Sin irrompibilidad se rompe con sorprendente rapidez.",
+  "i18n_25": "Máxima reducción de daño general. El peto es la pieza más importante de la armadura.",
+  "i18n_26": "Permite moverte más rápido mientras te agachas. Muy útil en construcción y sigilo.",
+  "i18n_27": "Aumenta la cantidad y calidad de los objetos que sueltan los mobs al morir.",
+  "i18n_28": "Invoca un rayo al impactar durante tormenta. Convierte creepers en cargados.",
+  "i18n_29": "Aumenta la probabilidad de obtener objetos raros: encantamientos, arcos, libros y más.",
+  "i18n_30": "Aleja a los enemigos con cada impacto. Útil para mantener la distancia segura.",
+  "i18n_31": "Autoreparación vital para el escudo, que puede degradarse muy rápido en combate activo.",
+  "i18n_32": "Los mejores encantamientos para eliminar mobs y sobrevivir en el mundo hostil de Minecraft.",
+  "i18n_33": "Aumenta el daño base de la maza y amplifica el daño por caída exponencialmente.",
+  "i18n_34": "Al impactar, lanza al jugador hacia arriba, permitiendo combo de caídas repetidas.",
+  "i18n_35": "Obtén el bloque exacto: vidrio, pasto, colmenas, piedra, cristal. Exclusivo con Fortuna.",
+  "i18n_36": "Autoreparación. Con Mending en toda la armadura no gastarás hierro en reparaciones.",
+  "i18n_37": "+2.5 daño extra a arañas, cucarachas, abejas y endermites. Exclusivo con Filo.",
+  "i18n_38": "+2.5 daño extra por nivel a mobs acuáticos (y a todos con lluvia/agua en 1.21).",
+  "i18n_39": "Autoreparación con experiencia, fundamental para cualquier objeto de uso continuo.",
+  "i18n_40": "Imprescindible para mantener la pieza de armadura más crítica en perfecto estado.",
+  "i18n_41": "Esencial: repara los élitros con XP recolectada durante el vuelo o al matar mobs.",
+  "i18n_42": "Las hachas hacen más daño base que la espada. Con Filo V son devastadoras.",
+  "i18n_43": "Al talar, puede multiplicar los objetos obtenidos de ciertas plantas y manzanas.",
+  "i18n_44": "Las flechas atraviesan hasta 4 enemigos. Extraordinario contra grupos de mobs.",
+  "i18n_45": "Maximiza la eficiencia en minería, construcción y recolección de recursos.",
+  "i18n_46": "Imprescindible. Usa la XP de minería para repararse automáticamente.",
+  "i18n_47": "Para recoger colmenas de abejas sin destruirlas ni molestar a las abejas.",
+  "i18n_48": "Autoreparación esencial para no quedar sin botas en momentos críticos.",
+  "i18n_49": "El peto absorbe más daño y se desgasta más rápido que otras piezas.",
+  "i18n_50": "Las flechas prenden fuego a los enemigos. Activa dispensadores, fogatas y TNT.",
+  "i18n_51": "Usa la experiencia recolectada para reparar automáticamente el objeto.",
+  "i18n_52": "Para recoger césped, pasto de micelio y otros bloques especiales intactos.",
+  "i18n_53": "Prende fuego a los enemigos. Los animales sueltan carne cocinada al morir.",
+  "i18n_54": "Dispara 3 flechas a la vez en un ángulo de 10°. Exclusivo con Perforación.",
+  "i18n_55": "Paradoja útil: pescar te da XP que repara la caña automáticamente.",
+  "i18n_56": "Aleja a los enemigos al golpearlos, dándote espacio para maniobrar.",
+  "i18n_57": "Esencial para prolongar la vida útil del hacha en combate y tala.",
+  "i18n_58": "Con tanto uso, irrompibilidad triplica aproximadamente la durabilidad.",
+  "i18n_59": "+2.5 daño extra a zombis, esqueletos y no muertos. Exclusivo con Filo.",
+  "i18n_60": "Los tridentes no se pueden craftear, reparar con Mending es crítico.",
+  "i18n_61": "Permite excavar bloques de tierra, arena y grava a velocidad extrema.",
+  "i18n_62": "Para recoger hojas de árbol completas o micelio sin romperlas.",
+  "i18n_63": "Reducción de daño general, fundamental en cualquier build defensivo.",
+  "i18n_64": "Autoreparación con experiencia para mantener la ballesta operativa.",
+  "i18n_65": "Reduce la probabilidad de que el objeto se dañe con cada uso.",
+  "i18n_66": "Más semillas de cultivos y materiales de la tierra. También más carne de gravel.",
+  "i18n_67": "La caña se daña con cada uso, irrompibilidad la hace duradera.",
+  "i18n_68": "También funciona como herramienta de tala. Velocidad de corte mejorada.",
+  "i18n_69": "Autoreparación con experiencia, vital para herramientas de uso intensivo.",
+  "i18n_70": "Minecraft Java Edition · Versión 1.21.1 · Modo Supervivencia",
+  "i18n_71": "Autoreparación continua, especialmente útil en granjas grandes.",
+  "i18n_72": "Axe · Alternativa de alto daño con mayor cooldown",
+  "i18n_73": "Más potencia por disparo, ideal para múltiples objetivos",
+  "i18n_74": "Corta troncos casi instantáneamente con nivel máximo.",
+  "i18n_75": "La guía definitiva para maximizar tu supervivencia",
+  "i18n_76": "Más manzanas, palos y otros materiales secundarios al talar.",
+  "i18n_77": "Permite esquilar ovejas y cortar hojas mucho más rápido.",
+  "i18n_78": "Fundamental para un objeto tan difícil de conseguir.",
+  "i18n_79": "Esencial para una herramienta que se usa continuamente.",
+  "i18n_80": "Las tijeras se rompen rápido sin este encantamiento.",
+  "i18n_81": "Encantamientos para arco, ballesta y combate a distancia.",
+  "i18n_82": "El objeto de vuelo del End, imprescindible en end-game",
+  "i18n_83": "La ballesta se desgasta con el uso intensivo en combate.",
+  "i18n_84": "Mace · Arma de la Prueba de Armas, daño por caída",
+  "i18n_85": "Para lana, hojas y plantas sin dañarlas",
+  "i18n_86": "Autoreparación continua para armadura de uso diario.",
+  "i18n_87": "Prolonga la vida del arco en encuentros de largo aliento.",
+  "i18n_88": "Trident · Versátil: cuerpo a cuerpo, lanzamiento y vuelo",
+  "i18n_89": "Autoreparación esencial para herramientas de uso diario.",
+  "i18n_90": "Triplica la durabilidad efectiva de la armadura.",
+  "i18n_91": "Prolonga la vida útil de una herramienta de uso frecuente.",
+  "i18n_92": "Las botas se desgastan con el movimiento constante.",
+  "i18n_93": "Prolonga la herramienta en granjas de alta producción.",
+  "i18n_94": "Sword · Arma principal de combate cuerpo a cuerpo",
+  "i18n_95": "Perdición de Artrópodos (Bane of Arthropods)",
+  "i18n_96": "Prot. contra Explosiones (Blast Protection)",
+  "i18n_97": "Excavación de tierra, arena y grava rápida",
+  "i18n_98": "Axe · Tala de madera y materiales de madera",
+  "i18n_99": "La pieza de mayor protección de la armadura",
+  "i18n_100": "Defensa activa contra proyectiles y ataques",
+  "i18n_101": "El arma a distancia más versátil del juego",
+  "i18n_102": "Autoreparación continua con experiencia.",
+  "i18n_103": "Agricultura y bloques de plantas en 1.21",
+  "i18n_104": "Imprescindible, ponlo siempre primero",
+  "i18n_105": "Protección de cabeza y utilidad acuática",
+  "i18n_106": "Profundidades del Mar (Depth Strider)",
+  "i18n_107": "Velocidad de Almas (Soul Speed)",
+  "i18n_108": "Mejora significativamente el objeto",
+  "i18n_109": "Reduce el desgaste en combate activo.",
+  "i18n_110": "Caída de Pluma (Feather Falling)",
+  "i18n_111": "Movilidad y resistencia ambiental",
+  "i18n_112": "Afinidad Acuática (Aqua Affinity)",
+  "i18n_113": "Pesca y obtención de objetos raros",
+  "i18n_114": "Útil en situaciones específicas",
+  "i18n_115": "Incompatible con otras opciones",
+  "i18n_116": "Protección y velocidad en combate",
+  "i18n_117": "Destructor de No Muertos (Smite)",
+  "i18n_118": "Suerte del Mar (Luck of the Sea)",
+  "i18n_119": "Caña de Pescar (Fishing Rod)",
+  "i18n_120": "La herramienta más importante del juego",
+  "i18n_121": "Irrompibilidad (Unbreaking)",
+  "i18n_122": "Guía Completa de Encantamientos",
+  "i18n_123": "Canalización (Channeling)",
+  "i18n_124": "Velocidad Explosiva (Swift Sneak)",
+  "i18n_125": "Toque de Seda (Silk Touch)",
+  "i18n_126": "Golpe de Viento (Wind Burst)",
+  "i18n_127": "Respiración (Respiration)",
+  "i18n_128": "Celeridad (Quick Charge)",
+  "i18n_129": "Multidisparo (Multishot)",
+  "i18n_130": "Eficiencia (Efficiency)",
+  "i18n_131": "Leyenda de Prioridades",
+  "i18n_132": "Protección (Protection)",
+  "i18n_133": "Hacha (Woodcutting)",
+  "i18n_134": "Ignición (Fire Aspect)",
+  "i18n_135": "Perforación (Piercing)",
+  "i18n_136": "🛡️ Armadura Completa",
+  "i18n_137": "Peto (Chestplate)",
+  "i18n_138": "Pantalones (Leggings)",
+  "i18n_139": "Aguamagia (Riptide)",
+  "i18n_140": "✨ Armas a Distancia",
+  "i18n_141": "Ballesta (Crossbow)",
+  "i18n_142": "Reparación (Mending)",
+  "i18n_143": "Empuje (Knockback)",
+  "i18n_144": "Perforación (Breach)",
+  "i18n_145": "Lealtad (Loyalty)",
+  "i18n_146": "⚔️ Armas de Combate",
+  "i18n_147": "Densidad (Density)",
+  "i18n_148": "Infinito (Infinity)",
+  "i18n_149": "Saqueo (Looting)",
+  "i18n_150": "Fortuna (Fortune)",
+  "i18n_151": "Ímpetu (Impaling)",
+  "i18n_152": "Hacha (Combat)",
+  "i18n_153": "Tijeras (Shears)",
+  "i18n_154": "Élitros (Elytra)",
+  "i18n_155": "Filo (Sharpness)",
+  "i18n_156": "Retroceso (Punch)",
+  "i18n_157": "Pico (Pickaxe)",
+  "i18n_158": "Escudo (Shield)",
+  "i18n_159": "Llamas (Flame)",
+  "i18n_160": "Pala (Shovel)",
+  "i18n_161": "Casco (Helmet)",
+  "i18n_162": "Botas (Boots)",
+  "i18n_163": "Señuelo (Lure)",
+  "i18n_164": "Poder (Power)",
+  "i18n_165": "DE ENCANTAMIENTOS",
+  "i18n_166": "Azada (Hoe)",
+  "i18n_167": ">Especiales<",
+  "i18n_168": ">Esencial<",
+  "i18n_169": ">Recomendado<",
+  "i18n_170": ">Exclusivo<",
+  "i18n_171": "NUEVA 1.21",
+  "i18n_172": "Arco (Bow)",
+  "i18n_173": "⛏️ Herramientas",
+  "i18n_174": "GRIMORIO",
+  "i18n_175": ">Armas<",
+  "i18n_176": ">Herramientas<",
+  "i18n_177": "Espada"
+}
+  };
+
+  let currentLang = 'ca';
+
+  // Extra manual translations
+  translations.ca['trident_title'] = 'Trident';
+  translations.es['trident_title'] = 'Tridente';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('btn-ca').classList.toggle('active', lang === 'ca');
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key]) {
+        el.innerHTML = translations[lang][key];
+      }
+    });
+    // Update theme button label language
+    const label = document.getElementById('theme-label');
+    if (label) {
+      if (isDark) {
+        label.textContent = lang === 'ca' ? 'CLAR' : 'CLARO';
+      } else {
+        label.textContent = lang === 'ca' ? 'FOSC' : 'OSCURO';
+      }
+    }
+  }
+
 </script>
 </body>
 </html>

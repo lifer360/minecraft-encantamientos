@@ -1,2 +1,2 @@
-# minecraft-encantamientos
-Guía de encantamientos para Minecraft
+# minecraft-encantaments
+Guia d'encantaments per a Minecraft en català.
